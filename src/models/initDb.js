@@ -21,6 +21,20 @@ const createTables = async () => {
     )
   `);
 
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS payment_methods (
+      payment_method_id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(50) NOT NULL
+    )
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS food_category (
+      category_id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(50) NOT NULL
+    )
+  `);
+
   console.log('Tables ready');
 };
 
