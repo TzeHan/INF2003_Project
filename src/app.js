@@ -7,6 +7,7 @@ const createTables = require('./models/initDb');
 app.use(express.json());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname,'..', 'views'));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 const indexRoutes = require('./routes/index');
 const movieRoutes = require('./routes/movies');
