@@ -1,16 +1,18 @@
 <%- include('partials/header', {title: 'Home'}) %>
-
-<h1>Landing page</h1>
-<!-- this is for testing -->
-<div>
-    <ul>
-        <% if (typeof users !== 'undefined' && users !== null) { %>
-            <%users.forEach(user =>{%>
-                <li><%= user.name %></li>
-            <% }) %>
-        <% } %>
-        
-    </ul>
-</div>
+<link rel="stylesheet" href="css/index.css">
+<main>
+    <h1>Landing page</h1>
+    <!-- this is for testing -->
+    <div>
+        <ul>
+            <% if (typeof users !== 'undefined' && users !== null) { %>
+                <%users.forEach(user =>{%>
+                    <li><%= user.name %></li>
+                <% }) %>
+            <% } %>
+            
+        </ul>
+    </div>
+</main>
 
 <%- include('partials/footer') %>
