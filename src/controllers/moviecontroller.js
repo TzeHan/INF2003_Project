@@ -15,3 +15,15 @@ exports.getMovies = (viewName) =>
                 res.status(500).json({error:'Error'})
             }
     };
+
+exports.getMoviebyid = (viewName) =>
+        async(req,res) =>{
+            try{
+                const movie = await movieQuery.findById(req.params.id)
+                res.render(viewName,{movie})
+            }
+            catch(err){
+                console.error(err);
+                res.status(500).json({error:'Error'})
+            }
+        };
