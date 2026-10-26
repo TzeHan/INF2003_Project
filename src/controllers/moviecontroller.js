@@ -1,10 +1,10 @@
-const movieQuery = require('../models/movieModel.js');
+const movieQuery = require('../models/movieModel');
 
 exports.movies = async(req,res)=>{
     res.render('movies');
 };
 
-exports.getMovies = (viewName) => {
+exports.getMovies = (viewName) =>
         async(req,res)=>{
             try{
                 const movies = await movieQuery.findAll();
@@ -14,5 +14,4 @@ exports.getMovies = (viewName) => {
                 console.error(err);
                 res.status(500).json({error:'Error'})
             }
-    }
-}
+    };
