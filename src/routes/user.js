@@ -14,4 +14,6 @@ router.get('/login',(req,res)=>{
     res.render('login');
 });
 
+router.post('/login', userController.authenticateUser)
+
 module.exports = router;
