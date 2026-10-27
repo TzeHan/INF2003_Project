@@ -13,18 +13,32 @@ exports.findById = async(userId) => {
     return rows[0];
 };
 
+exports.findByEmailAndPassword = async(user) => {
+    const [rows] = await pool.query(
+        `SELECT * FROM users
+        WHERE email = ? AND password = ?`,
+        [
+            user.email,
+            user.password
+        ]
+    );
+
+    return rows[0];
+};
+
 exports.create = async(user) => {
     const [result] = await pool.query(
         `INSERT INTO users 
         (name, phone_num, email, password, date_of_birth, type_id)
-        VALUES (?, ?, ?, ?, ?, ?)`,
+        VALUES (?, ?, ?, ?, ?, 
+        (SELECT type_id FROM type WHERE name = ?))`,
         [
             user.name,
             user.phone_num,
             user.email,
             user.password,
             user.date_of_birth,
-            user.type_id
+            'Customer'
         ]
     );
 
