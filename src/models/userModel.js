@@ -22,7 +22,6 @@ exports.findByEmailAndPassword = async(user) => {
             user.password
         ]
     );
-
     return rows[0];
 };
 
@@ -30,34 +29,31 @@ exports.create = async(user) => {
     const [result] = await pool.query(
         `INSERT INTO users 
         (name, phone_num, email, password, date_of_birth, type_id)
-        VALUES (?, ?, ?, ?, ?, 
-        (SELECT type_id FROM type WHERE name = ?))`,
+        VALUES (?, ?, ?, ?, ?, ?)`,
         [
             user.name,
             user.phone_num,
             user.email,
             user.password,
             user.date_of_birth,
-            'Customer'
+            user.type_id
         ]
     );
 
     return result;
 };
 
-exports.update = async(userId, user) => {
+exports.update = async(user) => {
     const [result] = await pool.query(
         `UPDATE users
-        SET name = ?, phone_num = ?, email = ?, password = ?, date_of_birth = ?, type_id = ?
+        SET name = ?, phone_num = ?, email = ?, date_of_birth = ?
         WHERE user_id = ?`,
         [
             user.name,
             user.phone_num,
             user.email,
-            user.password,
             user.date_of_birth,
-            user.type_id,
-            userId
+            user.user_id
         ]
     );
 
