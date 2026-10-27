@@ -65,7 +65,27 @@ const createTables = async () => {
       date_of_birth DATE,
       type_id INT,
       FOREIGN KEY (type_id) REFERENCES type(type_id)
+    )
+  `);
 
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS admin_profile (
+      user_id INT PRIMARY KEY,
+      cinema_id INT NOT NULL,
+      FOREIGN KEY (user_id) REFERENCES users(user_id),
+      FOREIGN KEY (cinema_id) REFERENCES cinema(cinema_id)
+    )
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS booking (
+      booking_id INT AUTO_INCREMENT PRIMARY KEY,
+      booking_date DATE NOT NULL,
+      booking_time TIME NOT NULL,
+      status_id INT NOT NULL,
+      user_id INT NOT NULL,
+      FOREIGN KEY (status_id) REFERENCES status(status_id),
+      FOREIGN KEY (user_id) REFERENCES users(user_id)
     )
   `);
 
@@ -139,8 +159,70 @@ const createTables = async () => {
     )
   `);
 
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS ticket (
+      ticket_id INT AUTO_INCREMENT PRIMARY KEY,
+      booking_id INT NOT NULL,
+      price DECIMAL(10,2) NOT NULL,
+      screening_seat_id INT NOT NULL,
+      FOREIGN KEY (booking_id) REFERENCES booking(booking_id),
+      FOREIGN KEY (screening_seat_id) REFERENCES screening_seat(screening_seat_id)
+    )
+  `);
 
-  
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS payment_methods (
+      payment_method_id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(50) NOT NULL
+    )
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS payment (
+      payment_id INT AUTO_INCREMENT PRIMARY KEY,
+      booking_id INT NOT NULL,
+      amount DECIMAL(10,2) NOT NULL,
+      payment_date DATE NOT NULL,
+      status_id INT NOT NULL,
+      transaction_id VARCHAR(100),
+      payment_method_id INT NOT NULL,
+      FOREIGN KEY (booking_id) REFERENCES booking(booking_id),
+      FOREIGN KEY (status_id) REFERENCES status(status_id),
+      FOREIGN KEY (payment_method_id) REFERENCES payment_methods(payment_method_id)
+    )
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS food_category (
+      category_id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(50) NOT NULL
+    )
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS food (
+      product_id INT PRIMARY KEY,
+      name VARCHAR(50) NOT NULL,
+      description VARCHAR(200),
+      price DECIMAL(10,2) NOT NULL,
+      category_id INT NOT NULL,
+      FOREIGN KEY (product_id) REFERENCES product(product_id),
+      FOREIGN KEY (category_id) REFERENCES food_category(category_id)
+    )
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS booking_food (
+      booking_id INT NOT NULL,
+      product_id INT NOT NULL,
+      qty INT NOT NULL,
+      price DECIMAL(10,2) NOT NULL,
+      PRIMARY KEY (booking_id, product_id),
+      FOREIGN KEY (booking_id) REFERENCES booking(booking_id),
+      FOREIGN KEY (product_id) REFERENCES food(product_id)
+    )
+  `);
+
   console.log('Tables ready');
 };
 
