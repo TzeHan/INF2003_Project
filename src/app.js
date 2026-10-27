@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const PORT = 3000;
 const createTables = require('./models/initDb');
+const generateData = require('./models/dataGen');
 
 app.use(express.json());
 app.set('view engine', 'ejs');
@@ -19,6 +20,7 @@ app.use('/users', userRoutes);
 
 const start = async () => {
   await createTables();
+  await generateData();
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
   });
