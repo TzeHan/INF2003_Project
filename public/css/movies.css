@@ -1,0 +1,15 @@
+.movies-main {
+    flex: 1;
+}
+
+.movie-banner {
+    display: block;
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+}
+
+.movies-heading {
+    margin: 24px 0;
+    text-align: center;
+}

@@ -1,0 +1,46 @@
+<%- include('partials/header', {title: 'Profile' , pageStylesheet: '/css/profile.css' }) %>
+
+    <main class="profile-main">
+        <section class="profile-content" aria-labelledby="profile-heading">
+            <img class="profile-image" src="/images/profile.svg" alt="Profile image">
+
+            <div class="profile-card">
+                <h1 id="profile-heading">Profile</h1>
+                <form>
+                    <!-- name -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="enter name">
+                        <label for="name">Name:</label>
+                    </div>
+
+                    <!-- username -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="username" name="username"
+                            placeholder="enter username">
+                        <label for="username">Username:</label>
+                    </div>
+
+                    <!-- mobile no-->
+                    <div class="form-floating mb-3">
+                        <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="enter mobile no">
+                        <label for="mobile">Mobile No:</label>
+                    </div>
+
+
+                    <!-- email -->
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="enter email">
+                        <label for="email">Email:</label>
+                    </div>
+
+                    <!-- save and cancel button-->
+                    <div class="profile-form-actions">
+                        <a href="/movies" class="btn btn-secondary">Cancel</a>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>

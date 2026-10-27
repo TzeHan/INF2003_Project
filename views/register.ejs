@@ -1,0 +1,57 @@
+<%- include('partials/header', {title: 'Register' , pageStylesheet: '/css/register.css' }) %>
+
+    <main class="register-main">
+        <div class="register-card">
+            <h5>Register</h5>
+
+            <form>
+                <!-- name -->
+                <div class="form-floating mb-3">
+                    <input required type="text" class="form-control" id="name" name="name" placeholder="enter name">
+                    <label for="name">Name:</label>
+                </div>
+
+                <!-- username -->
+                <div class="form-floating mb-3">
+                    <input required type="text" class="form-control" id="username" name="username"
+                        placeholder="enter username">
+                    <label for="username">Username:</label>
+                </div>
+
+
+                <!-- mobile number -->
+                <div class="form-floating mb-3">
+                    <input required type="tel" class="form-control" id="mobile" name="mobile"
+                        placeholder="enter mobile number">
+                    <label for="mobile">Mobile No:</label>
+                </div>
+
+
+                <!-- email -->
+                <div class="form-floating mb-3">
+                    <input required type="email" class="form-control" id="email" name="email" placeholder="enter email">
+                    <label for="email">Email:</label>
+                </div>
+
+                <!-- password -->
+                <div class="form-floating mb-3">
+                    <input required type="text" class="form-control" id="password" name="password"
+                        placeholder="enter password">
+                    <label for="name">Password:</label>
+                </div>
+
+
+                <!-- confirm password -->
+                <div class="form-floating mb-3">
+                    <input required type="text" class="form-control" id="confirmpassword" name="confirmpassword"
+                        placeholder="enter confirm password">
+                    <label for="confirmpassword">Confirm Password:</label>
+                </div>
+
+                <!-- register button-->
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>

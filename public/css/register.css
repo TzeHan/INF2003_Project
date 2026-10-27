@@ -1,0 +1,24 @@
+.register-main {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+}
+
+.register-card {
+    width: min(100%, 420px);
+    padding: 16px;
+    border: 1px solid #666;
+    background-color: #D1D1D6;
+}
+
+.register-card h5 {
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.register-card form {
+    width: 100%;
+    margin: 0 auto;
+}

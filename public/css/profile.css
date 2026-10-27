@@ -1,0 +1,47 @@
+.profile-main {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+}
+
+.profile-content {
+    width: min(100%, 420px);
+    text-align: center;
+}
+
+.profile-image {
+    display: block;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 16px;
+    padding: 12px;
+}
+
+.profile-card {
+    padding: 16px;
+    border: 1px solid #666;
+    background-color: #D1D1D6;
+}
+
+.profile-card h1 {
+    margin: 0 0 16px;
+    font-size: 1.25rem;
+}
+
+.profile-card form {
+    width: 100%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.profile-form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.profile-form-actions > * {
+    flex: 1;
+}

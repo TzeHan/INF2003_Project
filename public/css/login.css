@@ -1,0 +1,51 @@
+.login-main {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+}
+
+.login-form-card {
+    width: min(100%, 420px);
+    text-align: center;
+}
+
+.login-logo {
+    display: block;
+    width: min(100%, 220px);
+    height: auto;
+    margin: 0 auto 12px;
+}
+
+.login-welcome {
+    margin: 0 0 16px;
+    padding: 10px;
+    text-align: center;
+}
+
+.login-panel {
+    padding: 16px;
+    border: 1px solid #666;
+    background-color: #D1D1D6;
+}
+
+.login-panel h5 {
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.login-panel form {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.register-prompt {
+    margin: 12px 0 0;
+}
+
+.register-prompt a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+}

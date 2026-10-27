@@ -6,8 +6,12 @@
 header{
     /* border: 2px solid orange; */
     display: flex;
+    align-items: center;
     justify-content: space-between;
     background-color: #D1D1D6;
+    padding: 0 24px;
+    height: 70px;
+    box-sizing: border-box;
 }
 
 img{
@@ -30,8 +34,8 @@ img{
     /* border: 2px solid blue; */
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10%;
+    justify-content: flex-end;
+    margin-left: auto;
  }
  #nav2 a{
     /* border: 2px solid red; */
@@ -41,19 +45,29 @@ img{
     display: flex;
     align-items: center;
     /* border: 2px solid blue; */
-    width: 50%;
-    justify-content: space-between;
  }
 
  #nav1{
-    flex: 80%;
+    flex: 1;
     /* border: 2px solid red; */
 
  }
 
+ #nav1 nav{
+    width: auto;
+    justify-content: flex-start;
+    gap: 24px;
+ }
+
  #nav2{
-    flex: 20%;
+    flex: 0 0 auto;
     /* border: 2px solid green; */
+ }
+
+ #nav2 nav{
+    width: auto;
+    justify-content: flex-end;
+    gap: 18px;
  }
 
  body{
@@ -68,5 +82,10 @@ img{
 }
 
  footer{
-    border: 2px solid blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #D1D1D6;
+    height: 70px;
+    box-sizing: border-box;
  }
