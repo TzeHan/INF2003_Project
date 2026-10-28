@@ -13,16 +13,10 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 const indexRoutes = require('./routes/index');
 const movieRoutes = require('./routes/movies');
 const userRoutes = require('./routes/user');
-const loginRoutes = require('./routes/login');
-const registerRoutes = require('./routes/register');
-const profileRoutes = require('./routes/profile');
 
 app.use('/', indexRoutes);
 app.use('/movies',movieRoutes);
 app.use('/users', userRoutes);
-app.use('/login', loginRoutes);
-app.use('/register', registerRoutes);
-app.use('/profile', profileRoutes);
 
 const start = async () => {
   await createTables();
