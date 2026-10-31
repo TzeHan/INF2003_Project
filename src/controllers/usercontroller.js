@@ -39,7 +39,7 @@ exports.createUser = async(req,res)=>{
                 password:password,
                 date_of_birth:dob
             };
-            const result = await userQuery.create({new_User});
+            const result = await userQuery.create(new_User);
             res.redirect('/login');
         }
         
@@ -57,7 +57,7 @@ exports.authenticateUser = async(req,res)=>{
             email:email,
             password:password
         };
-        const result = await userQuery.findByEmailandPassword({user_Cred});
+        const result = await userQuery.findByEmailAndPassword(user_Cred);
         if (!result) { 
             return res.status(401).render('login', { error: "Invalid credentials" });
         }

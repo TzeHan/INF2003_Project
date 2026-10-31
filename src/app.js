@@ -7,6 +7,7 @@ const createTables = require('./models/initDb');
 const generateData = require('./models/dataGen');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname,'..', 'views'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -25,7 +26,11 @@ const userRoutes = require('./routes/user');
 
 app.use('/', indexRoutes);
 app.use('/movies',movieRoutes);
-app.use('/users', userRoutes);
+app.use('/', userRoutes);
+app.use((req, res, next) => {
+    res.locals.user = req.session.user;
+    next();
+});
 
 const start = async () => {
   await createTables();

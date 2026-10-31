@@ -77,6 +77,10 @@ img{
     min-height: 100vh;
  }
 
+ #errormsg{
+   color:red;
+ }
+
  main{
     flex: 1; 
 }

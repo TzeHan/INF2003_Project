@@ -10,17 +10,21 @@
 
                 <h5>Login</h5>
 
-                <form>
+                <% if (typeof error !== 'undefined') { %>
+                 <h2 id="errormsg">error:<%= error %></h2>
+                <% } %>
+
+                <form action="/login" method="POST">
                     <!-- username -->
                     <div class="form-floating mb-3">
-                        <input required type="text" class="form-control" id="username" name="username"
-                            placeholder="enter username">
-                        <label for="username">Username:</label>
+                        <input required type="text" class="form-control" id="email" name="email"
+                            placeholder="enter email">
+                        <label for="email">email:</label>
                     </div>
 
                     <!-- password -->
                     <div class="form-floating mb-3">
-                        <input required type="text" class="form-control" id="password" name="password"
+                        <input required type="password" class="form-control" id="password" name="password"
                             placeholder="enter password">
                         <label for="name">Password:</label>
                     </div>

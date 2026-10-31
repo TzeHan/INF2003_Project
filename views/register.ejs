@@ -4,24 +4,16 @@
         <div class="register-card">
             <h5>Register</h5>
 
-            <form>
+            <form action="/register" method="POST">
                 <!-- name -->
                 <div class="form-floating mb-3">
                     <input required type="text" class="form-control" id="name" name="name" placeholder="enter name">
                     <label for="name">Name:</label>
                 </div>
 
-                <!-- username -->
-                <div class="form-floating mb-3">
-                    <input required type="text" class="form-control" id="username" name="username"
-                        placeholder="enter username">
-                    <label for="username">Username:</label>
-                </div>
-
-
                 <!-- mobile number -->
                 <div class="form-floating mb-3">
-                    <input required type="tel" class="form-control" id="mobile" name="mobile"
+                    <input required type="tel" class="form-control" id="phone" name="phone"
                         placeholder="enter mobile number">
                     <label for="mobile">Mobile No:</label>
                 </div>
@@ -35,7 +27,7 @@
 
                 <!-- password -->
                 <div class="form-floating mb-3">
-                    <input required type="text" class="form-control" id="password" name="password"
+                    <input required type="password" class="form-control" id="password" name="password"
                         placeholder="enter password">
                     <label for="name">Password:</label>
                 </div>
@@ -43,9 +35,15 @@
 
                 <!-- confirm password -->
                 <div class="form-floating mb-3">
-                    <input required type="text" class="form-control" id="confirmpassword" name="confirmpassword"
+                    <input required type="password" class="form-control" id="confirmpassword" name="cfmpassword"
                         placeholder="enter confirm password">
                     <label for="confirmpassword">Confirm Password:</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input required type="date" class="form-control" id="dob" name="dob"
+                        placeholder="choose your date">
+                    <label for="confirmpassword">Date:</label>
                 </div>
 
                 <!-- register button-->

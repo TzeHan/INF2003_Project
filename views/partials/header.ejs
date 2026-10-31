@@ -28,7 +28,7 @@
     <header>
         <div id="nav1">
             <nav>
-                <img id="logo" src="/images/logo.png" alt="logo">
+                <a href="/"><img id="logo" src="/images/logo.png" alt="logo"></a>
 
                 <a href="/movies">Movies</a>
                 <a href="/">Food</a>
@@ -39,17 +39,19 @@
         <div id="nav2">
             <nav>
                 <a href="">
-                    <img src="images/heart.svg" alt="favourites">
+                    <img src="/images/heart.svg" alt="favourites">
                 </a>
                 <a href="">
-                    <img src="images/shopping_cart.svg" alt="cart">
+                    <img src="/images/shopping_cart.svg" alt="cart">
                 </a>
                 <a href="/">
-                    <img src="images/profile.svg" alt="profile">
+                    <img src="/images/profile.svg" alt="profile">
                 </a>
-                <a href="/">
-                    Login
-                </a>
+                <% if (typeof user !== undefined ) { %>
+                <a href="/Logout">logout</a>
+                <% } else { %>
+                <a href="/Login">login</a>
+                <% } %>
             </nav>
 
         </div>

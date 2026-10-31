@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/usercontroller');
 
-router.get('/', userController.getUsers);
+router.get('/users', userController.getUsers);
 
 router.get('/register',(req,res)=>{
     res.render('register');
