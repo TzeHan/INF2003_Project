@@ -38,29 +38,26 @@ exports.createFood = async (food) => {
 
 exports.findAllFood = async () => {
     const [rows] = await pool.query(
-        'SELECT f.*, fc.name as category_name FROM food f JOIN food_category fc ON f.category_id = fc.category_id '
+        'SELECT * FROM food '
     );
     return rows;
 };
 
-exports.findFoodById = async (productId) => {
+exports.findFoodById = async (food) => {
     const [rows] = await pool.query(
-        `SELECT f.*, fc.name as category_name 
-         FROM food f
-         JOIN food_category fc ON f.category_id = fc.category_id
-         WHERE f.product_id = ?`,
-        [productId]
+        'SELECT * FROM food WHERE product_id = ?',
+        [food.productId]
     );
     return rows[0];
 };
 
-exports.removeFood = async (productId) => {  //because connected to stuff
+exports.removeFood = async (food) => {  //because connected to stuff
     const connection = await pool.getConnection();
     try {
         await connection.beginTransaction();
 
-        await connection.query('DELETE FROM food WHERE product_id = ?', [productId]);
-        const [result] = await connection.query('DELETE FROM product WHERE product_id = ?', [productId]);
+        await connection.query('DELETE FROM food WHERE product_id = ?', [food.productId]);
+        const [result] = await connection.query('DELETE FROM product WHERE product_id = ?', [food.productId]);
 
         await connection.commit();
         return result;

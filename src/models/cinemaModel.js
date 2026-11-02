@@ -8,10 +8,10 @@ exports.create = async (cinema) => {
     return result;
 };
 
-exports.findById = async (cinemaId) => {
+exports.findById = async (cinema) => {
     const [rows] = await pool.query(
         'SELECT * FROM cinema WHERE cinema_id = ?',
-        [cinemaId]
+        [cinema.cinemaId]
     );
     return rows[0];
 };
@@ -21,18 +21,18 @@ exports.findAll = async () => {
     return rows;
 };
 
-exports.update = async (cinemaId, cinema) => {
+exports.update = async (cinema) => {
     const [result] = await pool.query(
         'UPDATE cinema SET name = ?, location = ? WHERE cinema_id = ?',
-        [cinema.name, cinema.location, cinemaId]
+        [cinema.name, cinema.location, cinema.cinemaId]
     );
     return result;
 };
 
-exports.remove = async (cinemaId) => {
+exports.remove = async (cinema) => {
     const [result] = await pool.query(
         'DELETE FROM cinema WHERE cinema_id = ?',
-        [cinemaId]
+        [cinema.cinemaId]
     );
     return result;
 };
