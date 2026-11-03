@@ -23,10 +23,12 @@ app.use(session({
 const indexRoutes = require('./routes/index');
 const movieRoutes = require('./routes/movies');
 const userRoutes = require('./routes/user');
+const adminRoutes = require('./routes/admin');
 
 app.use('/', indexRoutes);
 app.use('/movies',movieRoutes);
 app.use('/', userRoutes);
+app.use('/', adminRoutes);
 app.use((req, res, next) => {
     res.locals.user = req.session.user;
     next();
