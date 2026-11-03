@@ -1,0 +1,98 @@
+
+<%- include('partials/header', {title: 'Create Food', pageStylesheet: '/css/createfood.css' }) %>
+
+<main class="food-form-main">
+
+    <h2>Create food</h2>
+
+    <div class="food-form-container">
+
+        <form action="/food/create"
+              method="POST"
+              enctype="multipart/form-data">
+
+
+            <!-- Food Name -->
+            <div class="food-form-group">
+
+                <input type="text"
+                       name="name"
+                       placeholder="Food"
+                       required>
+
+            </div>
+
+
+            <!-- Description -->
+            <div class="food-form-group">
+
+                <input type="text"
+                       name="description"
+                       placeholder="Description"
+                       required>
+
+            </div>
+
+
+            <!-- Category -->
+            <div class="food-form-group">
+
+                <select name="category" required>
+
+                    <option value="" disabled selected>Category</option>
+
+                    <option value="Pizza">Pizza</option>
+
+                    <option value="Snacks">Snacks</option>
+
+                    <option value="Beverage">Beverage</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Price -->
+            <div class="food-form-group">
+
+                <input type="number"
+                       name="price"
+                       placeholder="Price"
+                       min="0"
+                       step="0.01"
+                       required>
+
+            </div>
+
+
+            <!-- Food Image -->
+            <div class="food-form-group">
+
+                <input type="file"
+                       name="image"
+                       accept="image/*"
+                       required>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="food-form-actions">
+
+                <a href="/food" class="food-cancel-btn">
+                    Cancel
+                </a>
+
+                <button type="submit" class="food-submit-btn">
+                    Submit
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+<%- include('partials/footer') %>
