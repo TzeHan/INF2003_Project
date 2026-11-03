@@ -15,6 +15,66 @@ exports.create = async (booking) => {
     return result;
 };
 
+exports.createBookingTransaction = async (booking) => {
+    const connection = await pool.getConnection();
+
+    try {
+        await connection.beginTransaction();
+
+        const [bookingResult] = await connection.query(
+            `INSERT INTO booking
+            (booking_date, booking_time, status_id, user_id)
+            VALUES (?, ?, ?, ?)`,
+            [
+                booking.booking_date,
+                booking.booking_time,
+                booking.status_id,
+                booking.user_id
+            ]
+        );
+
+        const booking_id = bookingResult.insertId;
+
+        const [ticketResult] = await connection.query(
+            `INSERT INTO ticket
+            (booking_id, price, screening_seat_id)
+            VALUES (?, ?, ?)`,
+            [
+                booking_id,
+                booking.price,
+                booking.screening_seat_id
+            ]
+        );
+
+        await connection.query(
+            `UPDATE screening_seat
+            SET status_id = (
+                SELECT status_id
+                FROM status
+                WHERE name = ?
+            )
+            WHERE screening_seat_id = ?`,
+            [
+                'Booked',
+                booking.screening_seat_id
+            ]
+        );
+
+        await connection.commit();
+
+        return {
+            booking_id,
+            ticket_id: ticketResult.insertId
+        };
+
+    } catch (error) {
+        await connection.rollback();
+        throw error;
+    } finally {
+        connection.release();
+    }
+};
+
 exports.findById = async (bookingId) => {
     const [rows] = await pool.query(
         `SELECT * FROM booking
