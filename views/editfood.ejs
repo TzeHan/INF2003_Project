@@ -1,0 +1,118 @@
+
+<%- include('partials/header', {title: 'Edit Food', pageStylesheet: '/css/editfood.css' }) %>
+
+<main class="food-form-main">
+
+    <h2>Edit Food</h2>
+
+    <div class="food-form-container">
+
+        <form action="/food/edit/<%= food._id %>"
+              method="POST"
+              enctype="multipart/form-data">
+
+
+            <!-- Food Name -->
+            <div class="food-form-group">
+
+                <input type="text"
+                       name="name"
+                       placeholder="Food"
+                       value="<%= food.name %>"
+                       required>
+
+            </div>
+
+
+            <!-- Description -->
+            <div class="food-form-group">
+
+                <input type="text"
+                       name="description"
+                       placeholder="Description"
+                       value="<%= food.description %>"
+                       required>
+
+            </div>
+
+
+            <!-- Category -->
+            <div class="food-form-group">
+
+                <select name="category" required>
+
+                    <option value="Pizza"
+                        <%= food.category === 'Pizza' ? 'selected' : '' %>>
+                        Pizza
+                    </option>
+
+                    <option value="Snacks"
+                        <%= food.category === 'Snacks' ? 'selected' : '' %>>
+                        Snacks
+                    </option>
+
+                    <option value="Beverage"
+                        <%= food.category === 'Beverage' ? 'selected' : '' %>>
+                        Beverage
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Price -->
+            <div class="food-form-group">
+
+                <input type="number"
+                       name="price"
+                       placeholder="Price"
+                       value="<%= food.price %>"
+                       min="0"
+                       step="0.01"
+                       required>
+
+            </div>
+
+
+            <!-- Current Food Image -->
+            <div class="food-current-image">
+
+                <p>Current Image:</p>
+
+                <img src="<%= food.image %>"
+                     alt="Current food image">
+
+            </div>
+
+
+            <!-- Upload New Image -->
+            <div class="food-form-group">
+
+                <input type="file"
+                       name="image"
+                       accept="image/*">
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="food-form-actions">
+
+                <a href="/food" class="food-cancel-btn">
+                    Cancel
+                </a>
+
+                <button type="submit" class="food-submit-btn">
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+<%- include('partials/footer') %>
