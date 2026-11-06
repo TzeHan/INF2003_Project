@@ -18,7 +18,7 @@ exports.createSeat = async (seat) => {
 
 exports.getAvailableSeats = async (screening) => {
     const [rows] = await pool.query(
-        "SELECT ss.screening_seat_id, ss.screening_id, s.seat_id, s.col_num, s.theater_id, st.name AS seat_type_name, st.price, sat.name AS status_name FROM screening_seat ss JOIN seat s ON ss.seat_id = s.seat_id JOIN seat_type st ON s.seat_type_id = st.seat_type_id JOIN status sat ON ss.status_id = sat.status_id WHERE ss.screening_id = ? AND sat.name = 'Available' ",
+        "SELECT sc.screening_id ,m.title AS movie_title,t.name AS theater_name,c.name AS cinema_name,sc.show_time, COUNT(ss.screening_seat_id) AS total_seats, SUM(CASE WHEN sat.name = 'Available' THEN 1 ELSE 0 END) AS available_seats FROM screening sc JOIN movie m ON sc.product_id = m.product_id JOIN theater t ON sc.theater_id = t.theater_id JOIN cinema c ON t.cinema_id = c.cinema_id JOIN screening_seat ss ON sc.screening_id = ss.screening_idJOIN status sat ON ss.status_id = sat.status_id WHERE sc.screening_id = ? GROUP BY sc.screening_id;",
         [screening.screeningId]
     );
     return rows;
@@ -26,7 +26,7 @@ exports.getAvailableSeats = async (screening) => {
 
 exports.findByTheater = async (theater) => {
     const [rows] = await pool.query(
-        'SELECT s.*, st.name as seat_type_name, st.price  FROM seat s  JOIN seat_type st ON s.seat_type_id = st.seat_type_id , WHERE s.theater_id = ?',
+        "SELECT s.*, st.name as seat_type_name, st.price  FROM seat s  JOIN seat_type st ON s.seat_type_id = st.seat_type_id WHERE s.theater_id = ?",
         [theater.theaterId]
     );
     return rows;
@@ -34,7 +34,7 @@ exports.findByTheater = async (theater) => {
 
 exports.updateSeat = async (seat) => {
     const [result] = await pool.query(
-        'UPDATE seat SET col_num = ?, theater_id = ?, seat_type_id = ? WHERE seat_id = ?',
+        "UPDATE seat SET col_num = ?, theater_id = ?, seat_type_id = ? WHERE seat_id = ?",
         [seat.col_num, seat.theater_id, seat.seat_type_id, seat.seatId]
     );
     return result;
@@ -42,7 +42,7 @@ exports.updateSeat = async (seat) => {
 
 exports.removeSeat = async (seat) => {
     const [result] = await pool.query(
-        'DELETE FROM seat WHERE seat_id = ?',
+        "DELETE FROM seat WHERE seat_id = ?",
         [seat.seatId]
     );
     return result;
