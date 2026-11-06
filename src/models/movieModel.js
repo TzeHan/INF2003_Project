@@ -5,10 +5,10 @@ exports.findAll = async() => {
     return rows;
 };
 
-exports.findById = async(productId) => {
+exports.findById = async(movie) => {
     const [rows] = await pool.query(
-        'SELECT * FROM movie WHERE product_id = ?',
-        [productId]
+        'SELECT * FROM movie WHERE movie.id = ?',
+        [movie.id]
     );
     return rows[0];
 };
@@ -32,11 +32,11 @@ exports.create = async(movie) => {
     return result;
 };
 
-exports.update = async(productId, movie) => {
+exports.update = async(movie) => {
     const [result] = await pool.query(
         `UPDATE movie
         SET title = ?, description = ?, duration = ?, release_date = ?, language_id = ?, img = ?
-        WHERE product_id = ?`,
+        WHERE movie.id = ?`,
         [
             movie.title,
             movie.description,
@@ -44,17 +44,17 @@ exports.update = async(productId, movie) => {
             movie.release_date,
             movie.language_id,
             movie.img,
-            productId
+            movie.id
         ]
     );
 
     return result;
 };
 
-exports.remove = async(productId) => {
+exports.remove = async(movie) => {
     const [result] = await pool.query(
-        'DELETE FROM movie WHERE product_id = ?',
-        [productId]
+        'DELETE FROM movie WHERE movie.id = ?',
+        [movie.id]
     );
 
     return result;
