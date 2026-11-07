@@ -36,7 +36,7 @@ const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
 
 app.use('/', indexRoutes);
-app.use('/movies',movieRoutes);
+app.use('/',movieRoutes);
 app.use('/', userRoutes);
 app.use('/', adminRoutes);
 

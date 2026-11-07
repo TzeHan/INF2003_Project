@@ -8,8 +8,8 @@ exports.getMovies = (viewName) =>
         async(req,res)=>{
             try{
                 const movies = await movieQuery.findAll();
-                const currentUser = req.session.user;
-                res.render(viewName,{movies:movies,user:currentUser});
+                // const currentUser = req.session.user;
+                res.render(viewName,{movies:movies});
             }
             catch(err){
                 console.error(err);

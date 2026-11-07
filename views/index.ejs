@@ -1,16 +1,25 @@
-<%- include('partials/header', {title: 'Home'}) %>
+<%- include('partials/header', {title: 'Home', pageStylesheet: '/css/index.css'}) %>
 
-<h1>Landing page</h1>
-<!-- this is for testing -->
-<div>
-    <ul>
-        <% if (typeof movies !== 'undefined' && movies !== null) { %>
-            <%movies.forEach(movie =>{%>
-                <li><%= movie.title %></li>
+<main>
+    <div id="banner">
+        <img src="/images/movie_banner2.jpg" alt="banner">
+    </div>
+    
+    <div id="moviesection">
+        <h1>Movies</h1>
+        <div id="movieblocks">
+            <% movies.forEach(element => { %>
+                <div class="card">
+                    <a href="/movieDetails/<%=element.product_id%>">
+                        <img src="/images/<%= element.img  %>" alt="">
+                        <p class="title"><%=element.title%></p>
+                        <p class="duration"><%=element.duration%></p>
+                    </a>
+                    <button class="buyBtn">Buy Tickets</button>
+                </div>
             <% }) %>
-        <% } %>
-        
-    </ul>
-</div>
+        </div>
+    </div>
+</main>
 
 <%- include('partials/footer') %>
