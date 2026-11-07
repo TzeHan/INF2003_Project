@@ -20,17 +20,26 @@ app.use(session({
   }
 }));
 
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    next();
+});
+
+app.use((req, res, next) => {
+    res.locals.user = req.session.user || null;
+    next();
+});
+
 const indexRoutes = require('./routes/index');
 const movieRoutes = require('./routes/movies');
 const userRoutes = require('./routes/user');
+const adminRoutes = require('./routes/admin');
 
 app.use('/', indexRoutes);
-app.use('/movies',movieRoutes);
+app.use('/',movieRoutes);
 app.use('/', userRoutes);
-app.use((req, res, next) => {
-    res.locals.user = req.session.user;
-    next();
-});
+app.use('/', adminRoutes);
+
 
 const start = async () => {
   await createTables();

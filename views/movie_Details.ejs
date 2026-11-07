@@ -1,0 +1,79 @@
+<%- include('partials/header', {title: 'Home', pageStylesheet: '/css/movie_Details.css'}) %>
+
+<main>
+    <div id="container">
+        <img src="/images/<%= movie.img  %>" alt="movie poster" id="banner">
+        <div id="description">
+            <div id="section1">
+                <div></div>
+                <h1>Movie Description</h1>
+                <img src="/images/heart.png" alt="heart" id="icon">
+            </div>
+            <div id="section2">
+                <div id="left">
+                    <div class="details">
+                        <h2>
+                            Title
+                        </h2>
+                        <p><%=movie.title%></p>
+                    </div>
+                    <div class="details">
+                        <h2>
+                            Genre
+                        </h2>
+                        <p>
+                            testing
+                        </p>
+                    </div>
+                    <div class="details">
+                        <h2>
+                            Release Date
+                        </h2>
+                        <p>
+                            <%=new Date(movie.release_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })%>
+                        </p>
+                    </div>
+                    <div class="details">
+                        <h2>
+                            Duration
+                        </h2>
+                        <p>
+                            <%=movie.duration%>
+                        </p>
+                    </div>
+                </div>
+                <div id="line">
+
+                </div>
+                <div id="right">
+                    <div class="details">
+                        <h2>
+                            Language
+                        </h2>
+                        <p>
+                            <%=movie.language_id%>
+                        </p>
+                    </div>
+                    <div class="details">
+                        <h2>
+                            Synopsis
+                        </h2>
+                        <p>
+                            <%=movie.description%>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button>
+        Buy Tickets
+    </button>
+</main>
+
+
+
+
+
+
+<%- include('partials/footer') %>

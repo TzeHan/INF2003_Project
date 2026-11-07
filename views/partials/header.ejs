@@ -47,10 +47,10 @@
                 <a href="/">
                     <img src="/images/profile.svg" alt="profile">
                 </a>
-                <% if (typeof user !== undefined ) { %>
-                <a href="/Logout">logout</a>
+                <% if (user) { %>
+                <a href="/logout">logout</a>
                 <% } else { %>
-                <a href="/Login">login</a>
+                <a href="/login">login</a>
                 <% } %>
             </nav>
 

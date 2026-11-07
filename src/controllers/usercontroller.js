@@ -71,3 +71,16 @@ exports.authenticateUser = async(req,res)=>{
         res.status(500).render('error',{error:'Error'});
     }
 };
+
+exports.logout = (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Error destroying session:", err);
+            return res.status(500).send("Could not log out");
+        }
+
+        res.clearCookie('connect.sid'); 
+        console.log("SESSION DESTROYED. Current session:", req.session); 
+        res.redirect('/');
+    });
+};
