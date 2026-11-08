@@ -1,0 +1,103 @@
+/* Admin Edit Movie Page */
+
+.movie-form-main {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+}
+
+.movie-form-card {
+    width: min(100%, 520px);
+    text-align: center;
+}
+
+
+/* Form Panel */
+
+.movie-form-panel {
+    padding: 16px;
+    border: 1px solid #666;
+    background-color: #D1D1D6;
+}
+
+.movie-form-panel h5 {
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.movie-form-panel form {
+    width: 100%;
+    margin: 0 auto;
+}
+
+#errormsg {
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: #b00020;
+}
+
+.movie-synopsis {
+    height: 120px !important;
+    resize: vertical;
+}
+
+
+/* Current Poster + Upload */
+
+.movie-image-upload {
+    text-align: left;
+}
+
+.movie-current-poster {
+    display: block;
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 8px;
+    border: 1px solid #666;
+    background-color: white;
+}
+
+.movie-image-upload .form-text {
+    font-size: 12px;
+    color: #555;
+}
+
+
+/* Actions */
+
+.movie-form-panel .btn-primary {
+    font-weight: 600;
+}
+
+.movie-form-back {
+    margin: 12px 0 0;
+}
+
+.movie-form-back a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.movie-form-back a:hover {
+    text-decoration: underline;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 576px) {
+
+    .movie-form-panel {
+        padding: 12px;
+    }
+
+    .movie-current-poster {
+        width: 100px;
+        height: 150px;
+    }
+
+}
