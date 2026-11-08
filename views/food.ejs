@@ -1,10 +1,24 @@
 <%- include('partials/header', {title: 'Home', pageStylesheet: '/css/food.css'}) %>
 
 <main>
-    <img src="/images/profile.svg" alt="profile">
-    <form action="">
-        
-    </form>
+    <div id="banner">
+    </div>
+    
+    <div id="moviesection">
+        <h1>Movies</h1>
+        <div id="movieblocks">
+            <% food.forEach(element => { %>
+                <div class="card">
+                    <a href="">
+                        <img src="/images/" alt="">
+                        <p class="title"><%=element.name%></p>
+                        <p class="duration"><%=element.price%></p>
+                    </a>
+                    <button class="buyBtn">Add</button>
+                </div>
+            <% }) %>
+        </div>
+    </div>
 </main>
 
 <%- include('partials/footer') %>
