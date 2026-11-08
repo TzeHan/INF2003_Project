@@ -1,0 +1,47 @@
+.food-form-main {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+}
+
+.food-form-card {
+    width: min(100%, 520px);
+    text-align: center;
+}
+
+.food-form-panel {
+    padding: 16px;
+    border: 1px solid #666;
+    background-color: #D1D1D6;
+}
+
+.food-form-panel h5 {
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.food-form-panel form {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.food-description {
+    height: 120px !important;
+    resize: vertical;
+}
+
+.food-image-upload {
+    text-align: left;
+}
+
+.food-form-back {
+    margin: 12px 0 0;
+}
+
+.food-form-back a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+}

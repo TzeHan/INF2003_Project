@@ -1,0 +1,62 @@
+<%- include('partials/header', {title: 'Create Food' , pageStylesheet: '/css/admin_create_food.css' }) %>
+    <main class="food-form-main">
+        <div class="food-form-card">
+
+            <div class="food-form-panel">
+
+                <h5>Create Food</h5>
+
+                <form action="" method="POST" enctype="multipart/form-data">
+                    <!-- food name -->
+                    <div class="form-floating mb-3">
+                        <input required type="text" class="form-control" id="name" name="name"
+                            maxlength="50" placeholder="enter food name">
+                        <label for="name">Food Name:</label>
+                    </div>
+
+                    <!-- description -->
+                    <div class="form-floating mb-3">
+                        <textarea required class="form-control food-description" id="description" name="description"
+                            maxlength="200" placeholder="enter description"></textarea>
+                        <label for="description">Description:</label>
+                    </div>
+
+                    <!-- category -->
+                    <div class="form-floating mb-3">
+                        <select required class="form-select" id="category_id" name="category_id">
+                            <option value="" disabled selected>Select a category</option>
+                            <% if (typeof categories !== 'undefined' && categories.length) { %>
+                                <% categories.forEach(category => { %>
+                                    <option value="<%= category.category_id %>"><%= category.name %></option>
+                                <% }) %>
+                            <% } else { %>
+                                <option value="1">Popcorn</option>
+                                <option value="2">Drinks</option>
+                                <option value="3">Snacks</option>
+                            <% } %>
+                        </select>
+                        <label for="category_id">Category:</label>
+                    </div>
+
+                    <!-- price -->
+                    <div class="form-floating mb-3">
+                        <input required type="number" class="form-control" id="price" name="price"
+                            min="0" step="0.01" placeholder="enter price">
+                        <label for="price">Price ($):</label>
+                    </div>
+
+                    <!-- image upload -->
+                    <div class="mb-3 food-image-upload">
+                        <label for="image" class="form-label">Food Image:</label>
+                        <input required type="file" class="form-control" id="image" name="image" accept="image/*">
+                    </div>
+
+                    <!-- submit -->
+                    <button type="submit" class="btn btn-primary w-100">Create Food</button>
+                </form>
+
+                <p class="food-form-back"><a href="/">Cancel</a></p>
+            </div>
+        </div>
+    </main>
+    <%- include('partials/footer') %>
