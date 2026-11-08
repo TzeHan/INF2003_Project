@@ -20,7 +20,7 @@ exports.getMovies = (viewName) =>
 exports.getMoviebyid = (viewName) =>
         async(req,res) =>{
             try{
-                const movie = await movieQuery.findById(req.params.id)
+                const movie = await movieQuery.findById({id:req.params.id})
                 res.render(viewName,{movie})
             }
             catch(err){

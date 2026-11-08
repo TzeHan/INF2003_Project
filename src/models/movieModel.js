@@ -7,7 +7,7 @@ exports.findAll = async() => {
 
 exports.findById = async(movie) => {
     const [rows] = await pool.query(
-        'SELECT * FROM movie WHERE movie.id = ?',
+        'SELECT * FROM movie WHERE product_id = ?',
         [movie.id]
     );
     return rows[0];
