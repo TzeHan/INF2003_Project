@@ -6,37 +6,37 @@
 
             <div class="profile-card">
                 <h1 id="profile-heading">Profile</h1>
-                <form>
+                <form action="/updateProfile" method="POST">
                     <!-- name -->
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="enter name">
+                        <input type="text" class="form-control" id="name" name="name" value="<%=user.name %>">
                         <label for="name">Name:</label>
                     </div>
 
-                    <!-- username -->
+                    <!-- date of birth -->
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="username" name="username"
-                            placeholder="enter username">
-                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="dob" name="dob" value="<%=new Date(user.date_of_birth).toLocaleDateString('en-GB')%>"
+                            placeholder="enter dob">
+                        <label for="dob">Date Of Birth:</label>
                     </div>
 
                     <!-- mobile no-->
                     <div class="form-floating mb-3">
-                        <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="enter mobile no">
-                        <label for="mobile">Mobile No:</label>
+                        <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="enter mobile no" value="<%=user.phone_num%>">
+                        <label for="mobile">Phone:</label>
                     </div>
 
 
                     <!-- email -->
                     <div class="form-floating">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="enter email">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="enter email" value="<%=user.email%>">
                         <label for="email">Email:</label>
                     </div>
 
                     <!-- save and cancel button-->
                     <div class="profile-form-actions">
                         <a href="/movies" class="btn btn-secondary">Cancel</a>
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>

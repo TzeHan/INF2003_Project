@@ -14,6 +14,15 @@ router.get('/login',(req,res)=>{
     res.render('login');
 });
 
+router.get('/profile',(req,res)=>{
+    if (!req.session.user) {
+            return res.redirect('/login'); 
+        }
+    res.render('profile');
+})
+
+router.post('/updateProfile', userController.updateProfile)
+
 router.get('/logout',userController.logout)
 
 router.post('/login', userController.authenticateUser)

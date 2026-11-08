@@ -34,11 +34,13 @@ const indexRoutes = require('./routes/index');
 const movieRoutes = require('./routes/movies');
 const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
+const foodRoutes = require('./routes/food')
 
 app.use('/', indexRoutes);
 app.use('/',movieRoutes);
 app.use('/', userRoutes);
 app.use('/', adminRoutes);
+app.use('/', foodRoutes)
 
 
 const start = async () => {
