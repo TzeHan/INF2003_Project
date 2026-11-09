@@ -11,6 +11,8 @@ router.get('/movieDetails/:id',movieController.getMoviebyid('movie_Details'))
 
 const reviewModel = require('../models/reviewModel');
 
+router.get('/purchaseTix/:id',movieController.retrieveBookingDetails)
+
 // A simple test route
 router.get('/test-mongo', async (req, res) => {
     try {

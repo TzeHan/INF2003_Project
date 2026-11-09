@@ -14,8 +14,8 @@ header{
     box-sizing: border-box;
 }
 
-img{
-    width:100px;
+header img{
+    width:12vh;
 }
 
  header div a{

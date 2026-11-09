@@ -95,9 +95,11 @@ const createTables = async () => {
       title VARCHAR(50) NOT NULL,
       description VARCHAR(200) NOT NULL,
       duration VARCHAR(50) NOT NULL,
-      release_date DATE,
+      date DATE,
       language_id INT NOT NULL,
       img VARCHAR(255),
+      time VARCHAR(50),
+      hall VARCHAR(50),
       FOREIGN KEY (product_id) REFERENCES product(product_id),
       FOREIGN KEY (language_id) REFERENCES language(language_id)
     )
@@ -114,61 +116,37 @@ const createTables = async () => {
   `);
 
   await pool.query(`
-    CREATE TABLE IF NOT EXISTS theater (
-      theater_id INT AUTO_INCREMENT PRIMARY KEY,
-      cinema_id INT NOT NULL,
-      name VARCHAR(50) NOT NULL,
-      location VARCHAR(50) NOT NULL,
-      FOREIGN KEY (cinema_id) REFERENCES cinema(cinema_id)
+    CREATE TABLE IF NOT EXISTS seat (
+      seat_id INT AUTO_INCREMENT PRIMARY KEY,
+      row varchar(1) NOT NULL,
+      col_num INT NOT NULL,
+      seat_type_id INT NOT NULL,
+      FOREIGN KEY (seat_type_id) REFERENCES seat_type(seat_type_id)
     )
   `);
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS screening (
       screening_id INT AUTO_INCREMENT PRIMARY KEY,
-      theater_id INT NOT NULL,
-      product_id INT NOT NULL,
-      show_time TIME,
-      FOREIGN KEY (theater_id) REFERENCES theater(theater_id),
-      FOREIGN KEY (product_id) REFERENCES product(product_id)
-
-    )
-  `);
-
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS seat (
-      seat_id INT AUTO_INCREMENT PRIMARY KEY,
-      col_num INT NOT NULL,
-      theater_id INT NOT NULL,
-      seat_type_id INT NOT NULL,
-      FOREIGN KEY (theater_id) REFERENCES theater(theater_id),
-      FOREIGN KEY (seat_type_id) REFERENCES seat_type(seat_type_id)
-    )
-  `);
-
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS screening_seat (
-      screening_seat_id INT AUTO_INCREMENT PRIMARY KEY,
-      screening_id INT NOT NULL,
       seat_id INT NOT NULL,
-      status_id INT NOT NULL,
-      FOREIGN KEY (screening_id) REFERENCES screening(screening_id),
+      product_id INT NOT NULL,
+      status_id INT NOT NULL DEFAULT 1,
       FOREIGN KEY (seat_id) REFERENCES seat(seat_id),
+      FOREIGN KEY (product_id) REFERENCES movie(product_id),
       FOREIGN KEY (status_id) REFERENCES status(status_id)
-
     )
   `);
 
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS ticket (
-      ticket_id INT AUTO_INCREMENT PRIMARY KEY,
-      booking_id INT NOT NULL,
-      price DECIMAL(10,2) NOT NULL,
-      screening_seat_id INT NOT NULL,
-      FOREIGN KEY (booking_id) REFERENCES booking(booking_id),
-      FOREIGN KEY (screening_seat_id) REFERENCES screening_seat(screening_seat_id)
-    )
-  `);
+  // await pool.query(`
+  //   CREATE TABLE IF NOT EXISTS ticket (
+  //     ticket_id INT AUTO_INCREMENT PRIMARY KEY,
+  //     booking_id INT NOT NULL,
+  //     price DECIMAL(10,2) NOT NULL,
+  //     screening_seat_id INT NOT NULL,
+  //     FOREIGN KEY (booking_id) REFERENCES booking(booking_id),
+  //     FOREIGN KEY (screening_seat_id) REFERENCES screening_seat(screening_seat_id)
+  //   )
+  // `);
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS payment_methods (
