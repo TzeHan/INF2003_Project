@@ -135,10 +135,10 @@ const generateData = async () => {
 
     await pool.query(`
         INSERT INTO food
-        (product_id, name, description, price, category_id)
+        (product_id, name, description, price, category_id, img)
         VALUES
-        (2, 'Popcorn', 'Regular popcorn', 6.50, 1),
-        (3, 'Coke', 'Regular Coke', 3.50, 2)
+        (2, 'Popcorn', 'Regular popcorn', 6.50, 1 , 'public/images/popcorn.jpg'),
+        (3, 'Coke', 'Regular Coke', 3.50, 2, 'public/images/coke.jpg')
     `);
 
     console.log('Sample data generated');
