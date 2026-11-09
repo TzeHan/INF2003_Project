@@ -206,7 +206,7 @@ const createTables = async () => {
       description VARCHAR(200),
       price DECIMAL(10,2) NOT NULL,
       category_id INT NOT NULL,
-      img VARCHAR(255),  
+      img VARCHAR(200),  
       FOREIGN KEY (product_id) REFERENCES product(product_id),
       FOREIGN KEY (category_id) REFERENCES food_category(category_id)
     )
