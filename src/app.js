@@ -5,6 +5,7 @@ const session = require('express-session');
 const PORT = 3000;
 const createTables = require('./models/initDb');
 const generateData = require('./models/dataGen');
+const { connectToMongo } = require('./models/mongoConnection');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -46,6 +47,8 @@ app.use('/', foodRoutes)
 const start = async () => {
   await createTables();
   await generateData();
+
+  await connectToMongo();
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
   });
