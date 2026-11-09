@@ -5,6 +5,7 @@ const session = require('express-session');
 const PORT = 3000;
 const createTables = require('./models/initDb');
 const generateData = require('./models/dataGen');
+const { connectToMongo } = require('./models/mongoConnection');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,16 +35,20 @@ const indexRoutes = require('./routes/index');
 const movieRoutes = require('./routes/movies');
 const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
+const foodRoutes = require('./routes/food')
 
 app.use('/', indexRoutes);
 app.use('/',movieRoutes);
 app.use('/', userRoutes);
 app.use('/', adminRoutes);
+app.use('/', foodRoutes)
 
 
 const start = async () => {
   await createTables();
   await generateData();
+
+  await connectToMongo();
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
   });

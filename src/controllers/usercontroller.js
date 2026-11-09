@@ -84,3 +84,36 @@ exports.logout = (req, res) => {
         res.redirect('/');
     });
 };
+
+exports.updateProfile = async(req,res)=>{
+    const{name,dob,mobile,email} = req.body;
+    let formattedDob = dob;
+        if (dob) {
+            const [day, month, year] = dob.split('/');
+            formattedDob = `${year}-${month}-${day}`;
+        }
+    const userId = req.session.user.user_id;
+    console.log(userId)
+    const user_Cred = {
+        user_id : userId,
+        name : name,
+        phone_num : mobile,
+        email : email,
+        date_of_birth : formattedDob
+    };
+    const result = await userQuery.update(user_Cred);
+    if (!result) { 
+        return res.status(401).render('profile', { error: "Update error" });
+        }
+    else{
+        const new_userCred = await userQuery.findById(userId);
+        if(!new_userCred){
+            return res.status(401).render('profile', { error: "Retrieve error" });
+        }
+        else{
+            req.session.user = new_userCred;
+            res.redirect("/profile");
+        }
+        
+    }
+}
