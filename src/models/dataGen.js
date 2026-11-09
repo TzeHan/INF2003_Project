@@ -137,8 +137,8 @@ const generateData = async () => {
         INSERT INTO food
         (product_id, name, description, price, category_id, img)
         VALUES
-        (2, 'Popcorn', 'Regular popcorn', 6.50, 1 , 'public/images/popcorn.jpg'),
-        (3, 'Coke', 'Regular Coke', 3.50, 2, 'public/images/coke.jpg')
+        (2, 'Popcorn', 'Regular popcorn', 6.50, 1 , 'popcorn.jpg'),
+        (3, 'Coke', 'Regular Coke', 3.50, 2, 'coke.jpg')
     `);
 
     console.log('Sample data generated');
