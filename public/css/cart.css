@@ -1,0 +1,71 @@
+main{
+    display: flex;
+}
+#main_container{
+    /* border: 2px solid red; */
+    /* flex: 1; */
+    display: flex;
+    justify-content: center;
+    gap: 2vw;
+    margin: 2vh auto;
+    width: 95%;
+}
+
+#left_container{
+    /* border: 2px solid blue; */
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    flex: 80;
+}
+
+#right_container{
+    /* border: 2px solid blue; */
+    flex: 20;
+    border: 0.5px solid grey;
+    border-radius: 1vh;
+    padding: 1vh;
+
+}
+.cartContainer{
+    border: 0.5px solid grey;
+    border-radius: 1vh;
+    display: flex;
+}
+
+.foodDetails img{
+    width: 10%;
+}
+
+.total{
+    display: flex;
+    justify-content: space-between;
+}
+
+.foodDetails{
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+}
+#updateQtySect{
+    display: flex;
+}
+#removeBtnContainer{
+    align-self: flex-end;
+}
+.qty-display{
+    border: 1px solid #000;
+    padding: 0 1vh;
+}
+
+#updateQtySect button{
+    background-color: #fff;
+}
+
+#btn-remove{
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 2vh;
+    padding: 1vh;
+    margin: 0 1vh 1vh 0;
+}

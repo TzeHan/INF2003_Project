@@ -190,6 +190,17 @@ const createTables = async () => {
     )
   `);
 
+    await pool.query(`
+    CREATE TABLE IF NOT EXISTS cart (
+      cart_id INT AUTO_INCREMENT PRIMARY KEY,
+      user_id INT NOT NULL,
+      product_id INT NOT NULL,
+      qty INT NOT NULL,
+      FOREIGN KEY (product_id) REFERENCES food(product_id),
+      FOREIGN KEY (user_id) REFERENCES users(user_id)
+    )
+  `);
+
   await pool.query(`
     CREATE TABLE IF NOT EXISTS booking_food (
       booking_id INT NOT NULL,
