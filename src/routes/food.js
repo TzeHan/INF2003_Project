@@ -12,4 +12,7 @@ router.get('/cart',foodController.getCart);
 
 router.post('/cart/update',foodController.updateQty);
 
+router.post('/cart/delete',foodController.deleteFood);
+
+
 module.exports = router;

@@ -28,24 +28,24 @@
                     </div>
                 </div>
                 <form action="/cart/delete" method="POST" id="removeBtnContainer">
+                    <input type="hidden" name="cart_id" value="<%=food.cart_id %>">
                     <button type="submit" id="btn-remove">Remove</button>
                 </form>
              </div>
             <% }) %>
         </div>
         <div id="right_container">
-                
-                    <h4>Order Summary</h4>
-                    <hr>
-                    <div class="total">
-                        <p>Subtotal</p>
-                        <p>$<%=subtotal%></p>
-                    </div>
-                    <hr>
-                    <div class="total">
-                        <h4>Total</h4>
-                        <p>$<%=subtotal%></p>
-                    </div>
+            <h4>Order Summary</h4>
+            <hr>
+            <div class="total">
+                <p>Subtotal</p>
+                <p>$<%=subtotal%></p>
+            </div>
+            <hr>
+            <div class="total">
+                <h4>Total</h4>
+                <p>$<%=subtotal%></p>
+            </div>
         </div>
     </div>
         

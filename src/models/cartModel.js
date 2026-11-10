@@ -39,3 +39,11 @@ exports.updateQty = async (cart_id,qty) => {
     );
     return result;
 };
+
+exports.deleteFoodfromCart = async (cart_id) => {
+    const [result] = await pool.query(
+        'DELETE from cart WHERE cart_id = ?',
+        [cart_id]
+    );
+    return result;
+};

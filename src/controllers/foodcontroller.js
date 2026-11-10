@@ -84,3 +84,16 @@ exports.updateQty = async(req,res)=>{
                 res.status(500).render('error',{error:'Error'})
             }
 };
+
+exports.deleteFood = async(req,res)=>{
+            try{
+                const {cart_id} = req.body;
+                console.log(cart_id)
+                await cartQuery.deleteFoodfromCart(cart_id);
+                res.redirect('/cart'); 
+            }
+            catch(err){
+                console.error(err);
+                res.status(500).render('error',{error:'Error'})
+            }
+};
