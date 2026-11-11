@@ -80,6 +80,14 @@ const generateData = async () => {
     `);
 
     await pool.query(`
+        INSERT INTO users
+        (name, phone_num, email, password, date_of_birth, type_id)
+        VALUES
+        ('Test Admin', '1234567', 'admin@example.com',
+        'password123', '2000-05-10', 2)
+    `);
+
+    await pool.query(`
         INSERT INTO product (name)
         VALUES
         ('Test Movie'),

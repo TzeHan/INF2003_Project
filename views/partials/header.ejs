@@ -30,9 +30,13 @@
             <nav>
                 <a href="/"><img id="logo" src="/images/logo.png" alt="logo"></a>
 
-                <a href="/movies">Movies</a>
+                <a href="/">Movies</a>
                 <a href="/food/1">Food</a>
                 <a href="">Watch History</a>
+                <% if (user && user.type_id == 2) { %>
+                 <a href="/admin/movie/add">Add Movies</a>
+                 <a href="/admin/food/add">Add Food</a>
+                <% } %>
             </nav>
         </div>
 

@@ -40,7 +40,7 @@ const foodRoutes = require('./routes/food')
 app.use('/', indexRoutes);
 app.use('/',movieRoutes);
 app.use('/', userRoutes);
-app.use('/', adminRoutes);
+app.use('/admin', adminRoutes);
 app.use('/', foodRoutes)
 
 
