@@ -1,0 +1,55 @@
+<%- include('partials/header', {title: 'Home', pageStylesheet: '/css/cart.css'}) %>
+
+<main>
+    <div id="main_container">
+        <div id="left_container">
+            <h1>Your shopping cart</h1>
+            <p>Review your order before checkout</p>
+            <% cartItems.forEach(food => { %>
+             <div class="cartContainer">
+                <div class="foodDetails">
+                    <img src="/images/<%=food.img%>" alt="foodimg">
+                    <div class="foodWords">
+                        <h3><%=food.name%></h3>
+                        <p><%=food.price%></p>
+                        <div id="updateQtySect">
+                            <form action="/cart/update" method="POST">
+                                <input type="hidden" name="cart_id" value="<%= food.cart_id %>">
+                                <input type="hidden" name="action" value="decrease">
+                                <button type="submit" class="btn-minus">-</button>
+                            </form>
+                           <span class="qty-display"><%= food.qty %></span>
+                            <form action="/cart/update" method="POST">
+                                <input type="hidden" name="cart_id" value="<%= food.cart_id %>">
+                                <input type="hidden" name="action" value="increase">
+                            <button type="submit" class="btn-plus">+</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <form action="/cart/delete" method="POST" id="removeBtnContainer">
+                    <input type="hidden" name="cart_id" value="<%=food.cart_id %>">
+                    <button type="submit" id="btn-remove">Remove</button>
+                </form>
+             </div>
+            <% }) %>
+        </div>
+        <div id="right_container">
+            <h4>Order Summary</h4>
+            <hr>
+            <div class="total">
+                <p>Subtotal</p>
+                <p>$<%=subtotal%></p>
+            </div>
+            <hr>
+            <div class="total">
+                <h4>Total</h4>
+                <p>$<%=subtotal%></p>
+            </div>
+        </div>
+    </div>
+        
+      
+</main>
+
+<%- include('partials/footer') %>

@@ -5,17 +5,23 @@
     </div>
     
     <div id="moviesection">
-        <h1>Movies</h1>
+        <div id="filter">
+            <% categories.forEach(category => { %>
+                <a href="/food/<%=category.category_id  %>" class="categoryBtn"><%=category.name %></a>
+            <% }) %>
+        </div>
         <div id="movieblocks">
-            <% food.forEach(element => { %>
-                <div class="card">
-                    <a href="">
-                        <img src="/images/" alt="">
-                        <p class="title"><%=element.name%></p>
-                        <p class="duration"><%=element.price%></p>
-                    </a>
-                    <button class="buyBtn">Add</button>
-                </div>
+            <% food.forEach(oneFood => { %>
+                <form class="card" action="/addToCart", method="post">
+                    <input type="hidden" value="<%=oneFood.product_id %>">
+                        <img src="/images/<%=oneFood.img%>" alt="">
+                        <p class="title"><%=oneFood.name%></p>
+                        <p class="price">$<%=oneFood.price%></p>
+                        <p class="duration"><%=oneFood.description%></p>
+                     <input type="hidden" name="id" value="<%=oneFood.product_id%>">
+                    <input class="qty" type="number" name="qty" value="1">
+                    <button type="submit" class="buyBtn">Add</button>
+                </form>
             <% }) %>
         </div>
     </div>

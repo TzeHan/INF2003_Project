@@ -2,7 +2,7 @@
 
 <main>
     <div id="container">
-        <img src="/images/<%= movie.img  %>" alt="movie poster" id="banner">
+        <img src="/images/<%= movie.img%>" alt="movie poster" id="banner">
         <div id="description">
             <div id="section1">
                 <div></div>
@@ -30,7 +30,7 @@
                             Release Date
                         </h2>
                         <p>
-                            <%=new Date(movie.release_date).toLocaleDateString('en-GB')%>
+                            <%=new Date(movie.date).toLocaleDateString('en-GB')%>
                         </p>
                     </div>
                     <div class="details">
@@ -66,7 +66,7 @@
             </div>
         </div>
     </div>
-    <button>
+<button onclick="window.location.href='/purchaseTix/<%= movie.product_id %>'">Buy Tickets</button>
         Buy Tickets
     </button>
 </main>

@@ -3,7 +3,16 @@ const router = express.Router();
 const foodController= require('../controllers/foodcontroller');
 
 
-router.get('/food',foodController.getAllfood("food"));
+
+router.get('/food/:id',foodController.getAllfood("food"));
+
+router.post('/addToCart',foodController.addToCart);
+
+router.get('/cart',foodController.getCart);
+
+router.post('/cart/update',foodController.updateQty);
+
+router.post('/cart/delete',foodController.deleteFood);
 
 
 module.exports = router;

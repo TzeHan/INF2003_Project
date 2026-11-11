@@ -43,12 +43,27 @@ exports.findAllFood = async () => {
     return rows;
 };
 
+exports.findAllCategory = async () => {
+    const [rows] = await pool.query(
+        'SELECT * FROM food_category '
+    );
+    return rows;
+};
+
 exports.findFoodById = async (food) => {
     const [rows] = await pool.query(
         'SELECT * FROM food WHERE product_id = ?',
         [food.productId]
     );
     return rows[0];
+};
+
+exports.findFoodByCategory = async (catId) => {
+    const [rows] = await pool.query(
+        'SELECT * FROM food WHERE category_id = (select category_id from food_category where category_id = ?)',
+        [catId]
+    );
+    return rows;
 };
 
 exports.removeFood = async (food) => {  //because connected to stuff
