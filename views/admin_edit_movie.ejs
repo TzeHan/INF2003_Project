@@ -22,7 +22,7 @@
                     <select required class="form-select" id="language" name="language">
                         <% if (typeof languages !== 'undefined' && languages.length) { %>
                             <% languages.forEach(lang => { %>
-                                <option value="<%= lang.language_id %>" <%= movie.language == lang.language_id ? 'selected' : '' %>>
+                                <option value="<%= lang.language_id %>" <%= movie.language_id == lang.language_id ? 'selected' : '' %>>
                                     <%= lang.name %>
                                 </option>
                             <% }) %>

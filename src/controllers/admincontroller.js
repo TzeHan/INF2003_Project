@@ -112,9 +112,9 @@ exports.getMovieDetail = async(req,res) =>{
         }
     const movie = await movieQuery.findById(req.params.id);
     const languages = await movieQuery.findAllLanguages();
-    const hall = await movieQuery.findAllHall();
-    const tier = await movieQuery.findAllTier();
-    res.render('admin_edit_movie', { movie:movie, languages:languages,tier:tier});
+    // const hall = await movieQuery.findAllHall();
+    // const tier = await movieQuery.findAllTier();
+    res.render('admin_edit_movie', { movie:movie, languages:languages});
     }
     catch(err){
             console.error(err);
@@ -124,11 +124,10 @@ exports.getMovieDetail = async(req,res) =>{
 
 exports.updateMovie = async (req, res) => {
     try {
-        const {product_id,name, description, category_id, price } = req.body;
+        const {id, title, language, hall_id, tier_id, duration, date, time, price, description} = req.body;
 
-        const existingFood = await foodQuery.findFoodById(product_id);
-
-        let imageName = existingFood.img;
+        const existingMovie = await movieQuery.findMovieById(id);
+        let imageName = existingMovie.img;
 
         if (req.file) {
             imageName = req.file.filename + path.extname(req.file.originalname);
@@ -138,20 +137,25 @@ exports.updateMovie = async (req, res) => {
             fs.renameSync(oldPath, newPath);
         }
 
-        const updatedFood = {
-            product_id,
-            name,
-            description,
+        const updatedMovie = {
+            product_id: id,
+            title,
+            language,
+            hall_id,
+            tier_id,
+            duration,
+            date,
+            time,
             price,
-            category_id,
+            description,
             image: imageName
         };
 
-        console.log(updatedFood);
+        console.log(updatedMovie);
 
-        await foodQuery.updateFood(updatedFood);
+        await movieQuery.updateMovie(updatedMovie);
         
-        res.redirect('/food/1');
+        res.redirect('/');
         
     } catch (err) {
         console.error(err);

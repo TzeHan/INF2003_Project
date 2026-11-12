@@ -24,6 +24,6 @@ router.post('/food/edit', upload.single('image'), adminController.updateFood);
 
 router.get('/movie/edit/:id',adminController.getMovieDetail);
 
-router.post('/admin/movie/edit',adminController.getMovieDetail);
+router.post('/admin/movie/edit', upload.single('image'),adminController.updateMovie);
 
 module.exports = router;

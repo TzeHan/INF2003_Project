@@ -83,6 +83,30 @@ exports.create = async(movie) => {
 };
 
 exports.update = async(movie) => {
+    const connection = await pool.getConnection();
+    try {
+        await connection.beginTransaction();
+
+        await connection.query(
+            'UPDATE product SET name = ? WHERE product_id = ?',
+            [food.name, food.product_id]
+        );
+
+        await connection.query(
+            `UPDATE movie 
+             SET title = ?, language = ?, hall_id = ?, tier_id = ?, duration = ?, date = ?, time = ?, price = ?, description = ?, img = ?
+             WHERE product_id = ?`,
+            [movie.title, movie.language, movie.hall_id, movie.tier_id, movie.duration, movie.date, movie.time, movie.price, movie.description, movie.image, movie.product_id]
+        );
+
+        await connection.commit();
+        return { success: true };
+    } catch (error) {
+        await connection.rollback();
+        throw error;
+    } finally {
+        connection.release();
+    }
     const [result] = await pool.query(
         `UPDATE movie
         SET title = ?, description = ?, duration = ?, date = ?, language_id = ?, img = ?, time= ?, hall=?
