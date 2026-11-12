@@ -29,11 +29,18 @@ const generateData = async () => {
         ('Thriller', 'Thriller movies')
     `);
 
-    await pool.query(`
-        INSERT INTO cinema (name, location)
+        await pool.query(`
+        INSERT INTO hall (hall_num)
         VALUES
-        ('Cinema One', 'Singapore'),
-        ('Cinema Two', 'Singapore')
+        (1),
+        (2)
+    `);
+
+    await pool.query(`
+        INSERT INTO tier (name)
+        VALUES
+        ('Standard'),
+        ('Premium')
     `);
 
     await pool.query(`
@@ -98,10 +105,10 @@ const generateData = async () => {
     await pool.query(`
         INSERT INTO movie
         (product_id, title, description, duration,
-        date, language_id, img,time,hall)
+        date, language_id, img, time, price, hall_id, tier_id)
         VALUES
         (1, 'Test Movie', 'Test movie description',
-        '120 minutes', '2026-10-01', 1, "avengers.jpg","1350","67")
+        '120 minutes', '2026-10-01', 1, "avengers.jpg", "1350", 12, 1, 1)
     `);
 
     await pool.query(`

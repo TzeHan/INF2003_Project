@@ -31,12 +31,17 @@ const createTables = async () => {
     )
   `);
 
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS cinema (
-      cinema_id INT AUTO_INCREMENT PRIMARY KEY,
-      name VARCHAR(50) NOT NULL,
-      location VARCHAR(50) NOT NULL
+    await pool.query(`
+    CREATE TABLE IF NOT EXISTS hall (
+      hall_id INT AUTO_INCREMENT PRIMARY KEY,
+      hall_num INT NOT NULL
+    )
+  `);
 
+    await pool.query(`
+    CREATE TABLE IF NOT EXISTS tier (
+      tier_id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(200) NOT NULL
     )
   `);
 
@@ -68,12 +73,10 @@ const createTables = async () => {
     )
   `);
 
-  await pool.query(`
+    await pool.query(`
     CREATE TABLE IF NOT EXISTS admin_profile (
       user_id INT PRIMARY KEY,
-      cinema_id INT NOT NULL,
-      FOREIGN KEY (user_id) REFERENCES users(user_id),
-      FOREIGN KEY (cinema_id) REFERENCES cinema(cinema_id)
+      FOREIGN KEY (user_id) REFERENCES users(user_id)
     )
   `);
 
@@ -89,7 +92,7 @@ const createTables = async () => {
     )
   `);
 
-  await pool.query(`
+    await pool.query(`
     CREATE TABLE IF NOT EXISTS movie (
       product_id INT PRIMARY KEY,
       title VARCHAR(50) NOT NULL,
@@ -99,9 +102,13 @@ const createTables = async () => {
       language_id INT NOT NULL,
       img VARCHAR(255),
       time VARCHAR(50),
-      hall VARCHAR(50),
+      price INT,
+      hall_id INT,
+      tier_id INT,
       FOREIGN KEY (product_id) REFERENCES product(product_id),
-      FOREIGN KEY (language_id) REFERENCES language(language_id)
+      FOREIGN KEY (language_id) REFERENCES language(language_id),
+      FOREIGN KEY (hall_id) REFERENCES hall(hall_id),
+      FOREIGN KEY (tier_id) REFERENCES tier(tier_id)
     )
   `);
 
@@ -198,18 +205,6 @@ const createTables = async () => {
       qty INT NOT NULL,
       FOREIGN KEY (product_id) REFERENCES food(product_id),
       FOREIGN KEY (user_id) REFERENCES users(user_id)
-    )
-  `);
-
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS booking_food (
-      booking_id INT NOT NULL,
-      product_id INT NOT NULL,
-      qty INT NOT NULL,
-      price DECIMAL(10,2) NOT NULL,
-      PRIMARY KEY (booking_id, product_id),
-      FOREIGN KEY (booking_id) REFERENCES booking(booking_id),
-      FOREIGN KEY (product_id) REFERENCES food(product_id)
     )
   `);
 
