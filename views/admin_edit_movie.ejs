@@ -1,0 +1,82 @@
+<%- include('partials/header', {title: 'Edit Movie' , pageStylesheet: '/css/admin_edit_movie.css' }) %>
+
+    <main class="movie-form-main">
+
+        <div class="movie-form-card">
+
+            <div class="movie-form-panel">
+
+                <h5>Edit Movie</h5>
+
+                <form action="" method="POST" enctype="multipart/form-data">
+                    <!-- title -->
+                    <div class="form-floating mb-3">
+                        <input required type="text" class="form-control" id="title" name="title"
+                            maxlength="50" placeholder="enter movie title" value="">
+                        <label for="title">Movie Title:</label>
+                    </div>
+
+                    <!-- cast -->
+                    <div class="form-floating mb-3">
+                        <input required type="text" class="form-control" id="cast" name="cast"
+                            placeholder="enter cast" value="">
+                        <label for="cast">Cast:</label>
+                    </div>
+
+                    <!-- director -->
+                    <div class="form-floating mb-3">
+                        <input required type="text" class="form-control" id="director" name="director"
+                            placeholder="enter director" value="">
+                        <label for="director">Director:</label>
+                    </div>
+
+                    <!-- genre -->
+                    <div class="form-floating mb-3">
+                        <input required type="text" class="form-control" id="genre" name="genre"
+                            placeholder="enter genre" value="">
+                        <label for="genre">Genre</label>
+                    </div>
+
+                    <!-- duration -->
+                    <div class="form-floating mb-3">
+                        <input required type="number" class="form-control" id="duration" name="duration"
+                            min="1" placeholder="enter duration" value="">
+                        <label for="duration">Duration (minutes):</label>
+                    </div>
+
+                    <!-- release date -->
+                    <div class="form-floating mb-3">
+                        <input required type="date" class="form-control" id="release_date" name="release_date"
+                            placeholder="enter release date" value="">
+                        <label for="release_date">Release Date:</label>
+                    </div>
+
+                    <!-- language -->
+                    <div class="form-floating mb-3">
+                        <input required type="text" class="form-control" id="language" name="language"
+                            placeholder="enter language" value="">
+                        <label for="language">Language:</label>
+                    </div>
+
+                    <!-- synopsis -->
+                    <div class="form-floating mb-3">
+                        <textarea required class="form-control movie-synopsis" id="synopsis" name="synopsis"
+                            maxlength="200" placeholder="enter synopsis"></textarea>
+                        <label for="synopsis">Synopsis:</label>
+                    </div>
+
+                    <!-- image upload -->
+                    <div class="mb-3 movie-image-upload">
+                        <label for="image" class="form-label">Movie Poster:</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                    </div>
+
+                    <!-- submit -->
+                    <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                </form>
+
+                <p class="movie-form-back"><a href="/">Cancel</a></p>
+            </div>
+        </div>
+    </main>
+    <%- include('partials/footer') %>

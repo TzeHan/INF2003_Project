@@ -22,8 +22,8 @@ exports.createFood = async (food) => {
 
         // child
         const [foodResult] = await connection.query(
-            'INSERT INTO food (product_id, name, description, price, category_id) VALUES (?, ?, ?, ?, ?)',
-            [product_id, food.name, food.description, food.price, food.category_id]
+            'INSERT INTO food (product_id, name, description, price, category_id, img) VALUES (?, ?, ?, ?, ?, ?)',
+            [product_id, food.name, food.description, food.price, food.category_id, food.image]
         );
 
         await connection.commit();
@@ -50,10 +50,10 @@ exports.findAllCategory = async () => {
     return rows;
 };
 
-exports.findFoodById = async (food) => {
+exports.findFoodById = async (id) => {
     const [rows] = await pool.query(
         'SELECT * FROM food WHERE product_id = ?',
-        [food.productId]
+        [id]
     );
     return rows[0];
 };
@@ -76,6 +76,31 @@ exports.removeFood = async (food) => {  //because connected to stuff
 
         await connection.commit();
         return result;
+    } catch (error) {
+        await connection.rollback();
+        throw error;
+    } finally {
+        connection.release();
+    }
+};
+
+exports.updateFood = async (food) => {
+    const connection = await pool.getConnection();
+    try {
+        await connection.beginTransaction();
+
+        await connection.query(
+            'UPDATE product SET name = ? WHERE product_id = ?',
+            [food.name, food.product_id]
+        );
+
+        await connection.query(
+            'UPDATE food SET name = ?, description = ?, price = ?, category_id = ?, img = ? WHERE product_id = ?',
+            [food.name, food.description, food.price, food.category_id, food.image, food.product_id]
+        );
+
+        await connection.commit();
+        return { success: true };
     } catch (error) {
         await connection.rollback();
         throw error;

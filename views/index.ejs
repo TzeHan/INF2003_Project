@@ -10,7 +10,13 @@
         <div id="movieblocks">
             <% movies.forEach(element => { %>
                 <div class="card">
-                    <a href="/movieDetails/<%=element.product_id%>">
+                   <a href="
+                        <% if (user && user.type_id == 2) { %>
+                            /admin/movie/edit/<%= element.product_id %>
+                        <% } else { %>
+                            /movieDetails/<%= element.product_id %>
+                        <% } %>
+                    ">                   
                         <img src="/images/<%= element.img  %>" alt="">
                         <p class="title"><%=element.title%></p>
                         <p class="duration"><%=element.duration%></p>

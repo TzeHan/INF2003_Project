@@ -18,9 +18,13 @@
                         <p class="title"><%=oneFood.name%></p>
                         <p class="price">$<%=oneFood.price%></p>
                         <p class="duration"><%=oneFood.description%></p>
-                     <input type="hidden" name="id" value="<%=oneFood.product_id%>">
-                    <input class="qty" type="number" name="qty" value="1">
-                    <button type="submit" class="buyBtn">Add</button>
+                        <% if (user && user.type_id == 2) { %>
+                            <button type="button" onclick="location.href='/admin/food/edit/<%=oneFood.product_id%>'" class="buyBtn">Edit</button>
+                        <% } else { %>
+                            <input type="hidden" name="id" value="<%=oneFood.product_id%>">
+                            <input class="qty" type="number" name="qty" value="1">
+                            <button type="submit" class="buyBtn">Add</button>
+                        <% } %>
                 </form>
             <% }) %>
         </div>

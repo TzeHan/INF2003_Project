@@ -47,7 +47,7 @@ exports.findById = async(id) => {
 exports.create = async(movie) => {
     const [result] = await pool.query(
         `INSERT INTO movie 
-        (product_id, title, description, duration, date, language_id, img,time,hall)
+        (product_id, title, description, duration, date, language_id, img,time,hall,class,price)
         VALUES (?, ?, ?, ?, ?, ?, ?)`,
         [
             movie.product_id,
@@ -58,7 +58,9 @@ exports.create = async(movie) => {
             movie.language_id,
             movie.img,
             movie.time,
-            movie.hall
+            movie.hall,
+            movie.class,
+            movie.price
         ]
     );
 

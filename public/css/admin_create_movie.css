@@ -1,0 +1,68 @@
+.movie-form-main {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+}
+
+.movie-form-card {
+    width: min(100%, 520px);
+    text-align: center;
+}
+
+.movie-form-logo {
+    display: block;
+    width: min(100%, 220px);
+    height: auto;
+    margin: 0 auto 12px;
+}
+
+.movie-form-welcome {
+    margin: 0 0 16px;
+    padding: 10px;
+    text-align: center;
+}
+
+.movie-form-panel {
+    padding: 16px;
+    border: 1px solid #666;
+    background-color: #D1D1D6;
+}
+
+.movie-form-panel h5 {
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.movie-form-panel form {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.movie-synopsis {
+    height: 120px !important;
+    resize: vertical;
+}
+
+.movie-image-upload {
+    text-align: left;
+}
+
+.movie-current-poster {
+    display: block;
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 8px;
+    border: 1px solid #666;
+}
+
+.movie-form-back {
+    margin: 12px 0 0;
+}
+
+.movie-form-back a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+}
