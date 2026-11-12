@@ -107,24 +107,6 @@ exports.update = async(movie) => {
     } finally {
         connection.release();
     }
-    const [result] = await pool.query(
-        `UPDATE movie
-        SET title = ?, description = ?, duration = ?, date = ?, language_id = ?, img = ?, time= ?, hall=?
-        WHERE movie.id = ?`,
-        [
-            movie.title,
-            movie.description,
-            movie.duration,
-            movie.release_date,
-            movie.language_id,
-            movie.img,
-            movie.time,
-            movie.hall,
-            movie.id
-        ]
-    );
-
-    return result;
 };
 
 exports.remove = async(movie) => {
