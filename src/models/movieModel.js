@@ -36,6 +36,21 @@ exports.findDistinctRow = async(id) => {
     return rows;
 };
 
+exports.findAllLanguages = async() => {
+    const[rows] = await pool.query('SELECT * FROM language',);
+    return rows;
+};
+
+exports.findAllHall = async() => {
+    const[rows] = await pool.query('SELECT * FROM hall',);
+    return rows;
+};
+
+exports.findAllTier = async() => {
+    const[rows] = await pool.query('SELECT * FROM tier',);
+    return rows;
+};
+
 exports.findById = async(id) => {
     const [rows] = await pool.query(
         'SELECT * FROM movie WHERE product_id = ?',

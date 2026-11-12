@@ -22,11 +22,8 @@ router.get('/food/edit/:id',adminController.getFoodDetail)
 
 router.post('/food/edit', upload.single('image'), adminController.updateFood);
 
-router.get('/movie/edit/:id',(req,res)=>{
-    if (!req.session.user || req.session.user.type_id != 2) {
-            return res.send('access denied.'); 
-        }
-    res.render('admin_edit_food', food={id:1});
-});
+router.get('/movie/edit/:id',adminController.getMovieDetail);
+
+router.post('/admin/movie/edit',adminController.getMovieDetail);
 
 module.exports = router;
