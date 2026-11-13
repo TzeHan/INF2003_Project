@@ -3,13 +3,14 @@ const pool = require('./connection');
 exports.create = async (booking) => {
     const [result] = await pool.query(
         `INSERT INTO booking
-        (booking_date, booking_time, status_id, user_id)
-        VALUES (?, ?, ?, ?)`,
+        (booking_date, booking_time, status_id, user_id, price)
+        VALUES (?, ?, ?, ?, ?)`,
         [
             booking.booking_date,
             booking.booking_time,
             booking.status_id,
-            booking.user_id
+            booking.user_id,
+            booking.price
         ]
     );
     return result;
@@ -23,13 +24,14 @@ exports.createBookingTransaction = async (booking) => {
 
         const [bookingResult] = await connection.query(
             `INSERT INTO booking
-            (booking_date, booking_time, status_id, user_id)
-            VALUES (?, ?, ?, ?)`,
+            (booking_date, booking_time, status_id, user_id, price)
+            VALUES (?, ?, ?, ?, ?)`,
             [
                 booking.booking_date,
                 booking.booking_time,
                 booking.status_id,
-                booking.user_id
+                booking.user_id,
+                booking.price
             ]
         );
 
@@ -37,26 +39,26 @@ exports.createBookingTransaction = async (booking) => {
 
         const [ticketResult] = await connection.query(
             `INSERT INTO ticket
-            (booking_id, price, screening_seat_id)
+            (booking_id, screening_id, price)
             VALUES (?, ?, ?)`,
             [
                 booking_id,
-                booking.price,
-                booking.screening_seat_id
+                booking.screening_id,
+                booking.price
             ]
         );
 
         await connection.query(
-            `UPDATE screening_seat
+            `UPDATE screening
             SET status_id = (
                 SELECT status_id
                 FROM status
                 WHERE name = ?
             )
-            WHERE screening_seat_id = ?`,
+            WHERE screening_id = ?`,
             [
                 'Booked',
-                booking.screening_seat_id
+                booking.screening_id
             ]
         );
 

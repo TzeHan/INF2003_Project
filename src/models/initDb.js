@@ -12,7 +12,6 @@ const createTables = async () => {
     CREATE TABLE IF NOT EXISTS product (
       product_id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(50) NOT NULL
-
     )
   `);
 
@@ -31,14 +30,14 @@ const createTables = async () => {
     )
   `);
 
-    await pool.query(`
+  await pool.query(`
     CREATE TABLE IF NOT EXISTS hall (
       hall_id INT AUTO_INCREMENT PRIMARY KEY,
       hall_num INT NOT NULL
     )
   `);
 
-    await pool.query(`
+  await pool.query(`
     CREATE TABLE IF NOT EXISTS tier (
       tier_id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(200) NOT NULL
@@ -73,7 +72,7 @@ const createTables = async () => {
     )
   `);
 
-    await pool.query(`
+  await pool.query(`
     CREATE TABLE IF NOT EXISTS admin_profile (
       user_id INT PRIMARY KEY,
       FOREIGN KEY (user_id) REFERENCES users(user_id)
@@ -84,15 +83,16 @@ const createTables = async () => {
     CREATE TABLE IF NOT EXISTS booking (
       booking_id INT AUTO_INCREMENT PRIMARY KEY,
       booking_date DATE NOT NULL,
-      booking_time TIME NOT NULL,
       status_id INT NOT NULL,
+      booking_time TIME NOT NULL,
       user_id INT NOT NULL,
+      price INT,
       FOREIGN KEY (status_id) REFERENCES status(status_id),
       FOREIGN KEY (user_id) REFERENCES users(user_id)
     )
   `);
 
-    await pool.query(`
+  await pool.query(`
     CREATE TABLE IF NOT EXISTS movie (
       product_id INT PRIMARY KEY,
       title VARCHAR(50) NOT NULL,
@@ -125,7 +125,7 @@ const createTables = async () => {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS seat (
       seat_id INT AUTO_INCREMENT PRIMARY KEY,
-      row varchar(1) NOT NULL,
+      row VARCHAR(1) NOT NULL,
       col_num INT NOT NULL,
       seat_type_id INT NOT NULL,
       FOREIGN KEY (seat_type_id) REFERENCES seat_type(seat_type_id)
@@ -144,36 +144,14 @@ const createTables = async () => {
     )
   `);
 
-  // await pool.query(`
-  //   CREATE TABLE IF NOT EXISTS ticket (
-  //     ticket_id INT AUTO_INCREMENT PRIMARY KEY,
-  //     booking_id INT NOT NULL,
-  //     price DECIMAL(10,2) NOT NULL,
-  //     screening_seat_id INT NOT NULL,
-  //     FOREIGN KEY (booking_id) REFERENCES booking(booking_id),
-  //     FOREIGN KEY (screening_seat_id) REFERENCES screening_seat(screening_seat_id)
-  //   )
-  // `);
-
   await pool.query(`
-    CREATE TABLE IF NOT EXISTS payment_methods (
-      payment_method_id INT AUTO_INCREMENT PRIMARY KEY,
-      name VARCHAR(50) NOT NULL
-    )
-  `);
-
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS payment (
-      payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    CREATE TABLE IF NOT EXISTS ticket (
+      ticket_id INT AUTO_INCREMENT PRIMARY KEY,
       booking_id INT NOT NULL,
-      amount DECIMAL(10,2) NOT NULL,
-      payment_date DATE NOT NULL,
-      status_id INT NOT NULL,
-      transaction_id VARCHAR(100),
-      payment_method_id INT NOT NULL,
+      screening_id INT NOT NULL,
+      price INT,
       FOREIGN KEY (booking_id) REFERENCES booking(booking_id),
-      FOREIGN KEY (status_id) REFERENCES status(status_id),
-      FOREIGN KEY (payment_method_id) REFERENCES payment_methods(payment_method_id)
+      FOREIGN KEY (screening_id) REFERENCES screening(screening_id)
     )
   `);
 
@@ -191,13 +169,13 @@ const createTables = async () => {
       description VARCHAR(200),
       price DECIMAL(10,2) NOT NULL,
       category_id INT NOT NULL,
-      img VARCHAR(200),  
+      img VARCHAR(200),
       FOREIGN KEY (product_id) REFERENCES product(product_id),
       FOREIGN KEY (category_id) REFERENCES food_category(category_id)
     )
   `);
 
-    await pool.query(`
+  await pool.query(`
     CREATE TABLE IF NOT EXISTS cart (
       cart_id INT AUTO_INCREMENT PRIMARY KEY,
       user_id INT NOT NULL,
@@ -205,6 +183,29 @@ const createTables = async () => {
       qty INT NOT NULL,
       FOREIGN KEY (product_id) REFERENCES food(product_id),
       FOREIGN KEY (user_id) REFERENCES users(user_id)
+    )
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS food_order (
+      food_order_id INT AUTO_INCREMENT PRIMARY KEY,
+      user_id INT NOT NULL,
+      order_date DATE NOT NULL,
+      order_time TIME NOT NULL,
+      total_cost INT,
+      FOREIGN KEY (user_id) REFERENCES users(user_id)
+    )
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS food_order_item (
+      food_order_item_id INT AUTO_INCREMENT PRIMARY KEY,
+      product_id INT NOT NULL,
+      food_order_id INT NOT NULL,
+      qty INT NOT NULL,
+      price INT,
+      FOREIGN KEY (product_id) REFERENCES food(product_id),
+      FOREIGN KEY (food_order_id) REFERENCES food_order(food_order_id)
     )
   `);
 

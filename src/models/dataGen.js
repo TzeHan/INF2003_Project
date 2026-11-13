@@ -61,15 +61,7 @@ const generateData = async () => {
         ('Paid'),
         ('Failed')
     `);
-
-    await pool.query(`
-        INSERT INTO payment_methods (name)
-        VALUES
-        ('Credit Card'),
-        ('Debit Card'),
-        ('PayNow')
-    `);
-
+    
     await pool.query(`
         INSERT INTO food_category (name)
         VALUES
