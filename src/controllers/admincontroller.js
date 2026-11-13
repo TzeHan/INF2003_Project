@@ -1,5 +1,5 @@
 const foodQuery = require('../models/foodModel');
-const cartQuery = require('../models/cartModel');
+const movieQuery = require('../models/movieModel');
 const path = require('path');
 const fs = require('fs'); 
 
@@ -97,6 +97,65 @@ exports.updateFood = async (req, res) => {
         await foodQuery.updateFood(updatedFood);
         
         res.redirect('/food/1');
+        
+    } catch (err) {
+        console.error(err);
+        res.status(500).render('error', { error: 'Error' });
+    }
+};
+
+
+exports.getMovieDetail = async(req,res) =>{
+    try{
+        if (!req.session.user || req.session.user.type_id != 2) {
+            return res.send('access denied.'); 
+        }
+    const movie = await movieQuery.findById(req.params.id);
+    const languages = await movieQuery.findAllLanguages();
+    // const hall = await movieQuery.findAllHall();
+    // const tier = await movieQuery.findAllTier();
+    res.render('admin_edit_movie', { movie:movie, languages:languages});
+    }
+    catch(err){
+            console.error(err);
+            res.status(500).render('error',{error:'Error'})
+        }
+};
+
+exports.updateMovie = async (req, res) => {
+    try {
+        const {id, title, language, hall_id, tier_id, duration, date, time, price, description} = req.body;
+
+        const existingMovie = await movieQuery.findMovieById(id);
+        let imageName = existingMovie.img;
+
+        if (req.file) {
+            imageName = req.file.filename + path.extname(req.file.originalname);
+            
+            const oldPath = req.file.path;
+            const newPath = req.file.path + path.extname(req.file.originalname);
+            fs.renameSync(oldPath, newPath);
+        }
+
+        const updatedMovie = {
+            product_id: id,
+            title,
+            language,
+            hall_id,
+            tier_id,
+            duration,
+            date,
+            time,
+            price,
+            description,
+            image: imageName
+        };
+
+        console.log(updatedMovie);
+
+        await movieQuery.updateMovie(updatedMovie);
+        
+        res.redirect('/');
         
     } catch (err) {
         console.error(err);

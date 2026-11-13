@@ -8,72 +8,101 @@
 
                 <h5>Edit Movie</h5>
 
-                <form action="" method="POST" enctype="multipart/form-data">
-                    <!-- title -->
-                    <div class="form-floating mb-3">
-                        <input required type="text" class="form-control" id="title" name="title"
-                            maxlength="50" placeholder="enter movie title" value="">
-                        <label for="title">Movie Title:</label>
-                    </div>
+              <form action="/admin/movie/edit" method="POST" enctype="multipart/form-data">
+                <!-- title -->
+                <div class="form-floating mb-3">
+                    <input type="hidden" name="id" value="<%=movie.product_id %>">
+                    <input required type="text" class="form-control" id="title" name="title"
+                        maxlength="50" placeholder="enter movie title" value="<%=movie.title %>">
+                    <label for="title">Movie Title:</label>
+                </div>
 
-                    <!-- cast -->
-                    <div class="form-floating mb-3">
-                        <input required type="text" class="form-control" id="cast" name="cast"
-                            placeholder="enter cast" value="">
-                        <label for="cast">Cast:</label>
-                    </div>
+                <!-- language (Replaced Cast) -->
+                <div class="form-floating mb-3">
+                    <select required class="form-select" id="language" name="language">
+                        <% if (typeof languages !== 'undefined' && languages.length) { %>
+                            <% languages.forEach(lang => { %>
+                                <option value="<%= lang.language_id %>" <%= movie.language_id == lang.language_id ? 'selected' : '' %>>
+                                    <%= lang.name %>
+                                </option>
+                            <% }) %>
+                        <% } %>
+                    </select>
+                    <label for="language">Language:</label>
+                </div>
 
-                    <!-- director -->
-                    <div class="form-floating mb-3">
-                        <input required type="text" class="form-control" id="director" name="director"
-                            placeholder="enter director" value="">
-                        <label for="director">Director:</label>
-                    </div>
+                <!-- hall_id (Replaced Director) -->
+                <div class="form-floating mb-3">
+                    <select required class="form-select" id="hall_id" name="hall_id">
+                        <% if (typeof halls !== 'undefined' && halls.length) { %>
+                            <% halls.forEach(hall => { %>
+                                <option value="<%= hall.hall_id %>" <%= movie.hall_id == hall.hall_id ? 'selected' : '' %>>
+                                    Hall <%= hall.hall_num %>
+                                </option>
+                            <% }) %>
+                        <% } %>
+                    </select>
+                    <label for="hall_id">Hall:</label>
+                </div>
 
-                    <!-- genre -->
-                    <div class="form-floating mb-3">
-                        <input required type="text" class="form-control" id="genre" name="genre"
-                            placeholder="enter genre" value="">
-                        <label for="genre">Genre</label>
-                    </div>
+                <!-- tier_id (Replaced Genre) -->
+                <div class="form-floating mb-3">
+                    <select required class="form-select" id="tier_id" name="tier_id">
+                        <% if (typeof tiers !== 'undefined' && tiers.length) { %>
+                            <% tiers.forEach(tier => { %>
+                                <option value="<%= tier.tier_id %>" <%= movie.tier_id == tier.tier_id ? 'selected' : '' %>>
+                                    <%= tier.name %>
+                                </option>
+                            <% }) %>
+                        <% } %>
+                    </select>
+                    <label for="tier_id">Tier:</label>
+                </div>
 
-                    <!-- duration -->
-                    <div class="form-floating mb-3">
-                        <input required type="number" class="form-control" id="duration" name="duration"
-                            min="1" placeholder="enter duration" value="">
-                        <label for="duration">Duration (minutes):</label>
-                    </div>
+                <!-- duration -->
+                <div class="form-floating mb-3">
+                    <input required type="text" class="form-control" id="duration" name="duration"
+                        placeholder="enter duration" value="<%=movie.duration %>">
+                    <label for="duration">Duration:</label>
+                </div>
 
-                    <!-- release date -->
-                    <div class="form-floating mb-3">
-                        <input required type="date" class="form-control" id="release_date" name="release_date"
-                            placeholder="enter release date" value="">
-                        <label for="release_date">Release Date:</label>
-                    </div>
+                <!-- date (Replaced Release Date) -->
+                <div class="form-floating mb-3">
+                    <input required type="date" class="form-control" id="date" name="date"
+                        value="<%= movie.date ? new Date(movie.date).toISOString().split('T')[0] : '' %>">
+                    <label for="date">Date:</label>
+                </div>
 
-                    <!-- language -->
-                    <div class="form-floating mb-3">
-                        <input required type="text" class="form-control" id="language" name="language"
-                            placeholder="enter language" value="">
-                        <label for="language">Language:</label>
-                    </div>
+                <!-- time (Added because it's in your ERD) -->
+                <div class="form-floating mb-3">
+                    <input required type="text" class="form-control" id="time" name="time"
+                        placeholder="enter time" value="<%=movie.time %>">
+                    <label for="time">Time:</label>
+                </div>
 
-                    <!-- synopsis -->
-                    <div class="form-floating mb-3">
-                        <textarea required class="form-control movie-synopsis" id="synopsis" name="synopsis"
-                            maxlength="200" placeholder="enter synopsis"></textarea>
-                        <label for="synopsis">Synopsis:</label>
-                    </div>
+                <!-- price (Added because it's in your ERD) -->
+                <div class="form-floating mb-3">
+                    <input required type="number" class="form-control" id="price" name="price"
+                        min="0" step="0.01" placeholder="enter price" value="<%=movie.price %>">
+                    <label for="price">Price ($):</label>
+                </div>
 
-                    <!-- image upload -->
-                    <div class="mb-3 movie-image-upload">
-                        <label for="image" class="form-label">Movie Poster:</label>
-                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
-                    </div>
+                <!-- description (Where Synopsis used to be) -->
+                <div class="form-floating mb-3">
+                    <textarea required class="form-control movie-synopsis" id="description" name="description"
+                        maxlength="200" placeholder="enter description"><%=movie.description%></textarea>
+                    <label for="description">Synopsis:</label>
+                </div>
 
-                    <!-- submit -->
-                    <button type="submit" class="btn btn-primary w-100">Save Changes</button>
-                </form>
+                <!-- image upload -->
+                <div class="mb-3 movie-image-upload">
+                    <label for="image" class="form-label">Movie Poster:</label>
+                    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                </div>
+
+                <!-- submit -->
+                <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+            </form>
 
                 <p class="movie-form-back"><a href="/">Cancel</a></p>
             </div>
