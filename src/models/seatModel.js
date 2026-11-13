@@ -10,39 +10,50 @@ exports.createSeatType = async (seatType) => {
 
 exports.createSeat = async (seat) => {
     const [result] = await pool.query(
-        'INSERT INTO seat (col_num, theater_id, seat_type_id) VALUES (?, ?, ?)',
-        [seat.col_num, seat.theater_id, seat.seat_type_id]
+        'INSERT INTO seat (row, col_num, seat_type_id) VALUES (?, ?, ?)',
+        [seat.row, seat.col_num, seat.seat_type_id]
     );
     return result;
 };
 
-exports.getAvailableSeats = async (screening) => {
+exports.getAvailableSeats = async (movie) => {
     const [rows] = await pool.query(
-        "SELECT sc.screening_id ,m.title AS movie_title,t.name AS theater_name,c.name AS cinema_name,sc.show_time, COUNT(ss.screening_seat_id) AS total_seats, SUM(CASE WHEN sat.name = 'Available' THEN 1 ELSE 0 END) AS available_seats FROM screening sc JOIN movie m ON sc.product_id = m.product_id JOIN theater t ON sc.theater_id = t.theater_id JOIN cinema c ON t.cinema_id = c.cinema_id JOIN screening_seat ss ON sc.screening_id = ss.screening_idJOIN status sat ON ss.status_id = sat.status_id WHERE sc.screening_id = ? GROUP BY sc.screening_id;",
-        [screening.screeningId]
+        `SELECT s.*, st.name AS seat_type_name, st.price, sc.status_id
+         FROM seat s
+         JOIN seat_type st ON s.seat_type_id = st.seat_type_id
+         JOIN screening sc ON s.seat_id = sc.seat_id
+         JOIN status sta ON sc.status_id = sta.status_id
+         WHERE sc.product_id = ? AND sta.name = 'Available'
+         ORDER BY s.row, s.col_num`,
+        [movie.productId]
     );
     return rows;
 };
 
-exports.findByTheater = async (theater) => {
+exports.findByMovie = async (movie) => {
     const [rows] = await pool.query(
-        "SELECT s.*, st.name as seat_type_name, st.price  FROM seat s  JOIN seat_type st ON s.seat_type_id = st.seat_type_id WHERE s.theater_id = ?",
-        [theater.theaterId]
+        `SELECT s.*, st.name AS seat_type_name, st.price, sc.status_id
+         FROM seat s
+         JOIN seat_type st ON s.seat_type_id = st.seat_type_id
+         JOIN screening sc ON s.seat_id = sc.seat_id
+         WHERE sc.product_id = ?
+         ORDER BY s.row, s.col_num`,
+        [movie.productId]
     );
     return rows;
 };
 
 exports.updateSeat = async (seat) => {
     const [result] = await pool.query(
-        "UPDATE seat SET col_num = ?, theater_id = ?, seat_type_id = ? WHERE seat_id = ?",
-        [seat.col_num, seat.theater_id, seat.seat_type_id, seat.seatId]
+        'UPDATE seat SET row = ?, col_num = ?, seat_type_id = ? WHERE seat_id = ?',
+        [seat.row, seat.col_num, seat.seat_type_id, seat.seatId]
     );
     return result;
 };
 
 exports.removeSeat = async (seat) => {
     const [result] = await pool.query(
-        "DELETE FROM seat WHERE seat_id = ?",
+        'DELETE FROM seat WHERE seat_id = ?',
         [seat.seatId]
     );
     return result;

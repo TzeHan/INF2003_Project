@@ -23,37 +23,43 @@ exports.findSeats = async(id) => {
 };
 
 exports.findAvailableSeats = async(id) => {
-    const[rows] = await pool.query('SELECT s.* from Seat s join Screening sc on s.seat_id = sc.seat_id join movie m on m.product_id = sc.product_id WHERE m.product_id = ?',
+    const[rows] = await pool.query(
+        'SELECT s.* from Seat s join Screening sc on s.seat_id = sc.seat_id join movie m on m.product_id = sc.product_id WHERE m.product_id = ?',
         [id]
     );
     return rows;
 };
 
 exports.findDistinctRow = async(id) => {
-    const[rows] = await pool.query('SELECT DISTINCT s.row from Seat s join Screening sc on s.seat_id = sc.seat_id join movie m on m.product_id = sc.product_id WHERE m.product_id = ?',
+    const[rows] = await pool.query(
+        'SELECT DISTINCT s.row from Seat s join Screening sc on s.seat_id = sc.seat_id join movie m on m.product_id = sc.product_id WHERE m.product_id = ?',
         [id]
     );
     return rows;
 };
 
 exports.findAllLanguages = async() => {
-    const[rows] = await pool.query('SELECT * FROM language',);
+    const[rows] = await pool.query('SELECT * FROM language');
     return rows;
 };
 
 exports.findAllHall = async() => {
-    const[rows] = await pool.query('SELECT * FROM hall',);
+    const[rows] = await pool.query('SELECT * FROM hall');
     return rows;
 };
 
 exports.findAllTier = async() => {
-    const[rows] = await pool.query('SELECT * FROM tier',);
+    const[rows] = await pool.query('SELECT * FROM tier');
     return rows;
 };
 
 exports.findById = async(id) => {
     const [rows] = await pool.query(
-        'SELECT * FROM movie WHERE product_id = ?',
+        `SELECT m.*, h.hall_num, t.name AS tier_name
+         FROM movie m
+         JOIN hall h ON m.hall_id = h.hall_id
+         JOIN tier t ON m.tier_id = t.tier_id
+         WHERE m.product_id = ?`,
         [id]
     );
     return rows[0];
@@ -62,20 +68,20 @@ exports.findById = async(id) => {
 exports.create = async(movie) => {
     const [result] = await pool.query(
         `INSERT INTO movie 
-        (product_id, title, description, duration, date, language_id, img,time,hall,class,price)
-        VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        (product_id, title, description, duration, date, language_id, img, time, price, hall_id, tier_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
             movie.product_id,
             movie.title,
             movie.description,
             movie.duration,
-            movie.release_date,
+            movie.date,
             movie.language_id,
             movie.img,
             movie.time,
-            movie.hall,
-            movie.class,
-            movie.price
+            movie.price,
+            movie.hall_id,
+            movie.tier_id
         ]
     );
 
@@ -84,23 +90,43 @@ exports.create = async(movie) => {
 
 exports.update = async(movie) => {
     const connection = await pool.getConnection();
+
     try {
         await connection.beginTransaction();
 
         await connection.query(
             'UPDATE product SET name = ? WHERE product_id = ?',
-            [food.name, food.product_id]
+            [
+                movie.title,
+                movie.product_id
+            ]
         );
 
         await connection.query(
-            `UPDATE movie 
-             SET title = ?, language = ?, hall_id = ?, tier_id = ?, duration = ?, date = ?, time = ?, price = ?, description = ?, img = ?
+            `UPDATE movie
+             SET title = ?, description = ?, duration = ?, date = ?, 
+                 language_id = ?, img = ?, time = ?, price = ?, 
+                 hall_id = ?, tier_id = ?
              WHERE product_id = ?`,
-            [movie.title, movie.language, movie.hall_id, movie.tier_id, movie.duration, movie.date, movie.time, movie.price, movie.description, movie.image, movie.product_id]
+            [
+                movie.title,
+                movie.description,
+                movie.duration,
+                movie.date,
+                movie.language_id,
+                movie.img,
+                movie.time,
+                movie.price,
+                movie.hall_id,
+                movie.tier_id,
+                movie.product_id
+            ]
         );
 
         await connection.commit();
+
         return { success: true };
+
     } catch (error) {
         await connection.rollback();
         throw error;
@@ -111,8 +137,8 @@ exports.update = async(movie) => {
 
 exports.remove = async(movie) => {
     const [result] = await pool.query(
-        'DELETE FROM movie WHERE movie.id = ?',
-        [movie.id]
+        'DELETE FROM movie WHERE product_id = ?',
+        [movie.product_id]
     );
 
     return result;
