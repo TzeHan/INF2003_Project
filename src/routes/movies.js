@@ -13,6 +13,10 @@ const reviewModel = require('../models/reviewModel');
 
 router.get('/purchaseTix/:id',movieController.retrieveBookingDetails)
 
+router.post('/favourite/:id', movieController.addFavourite);
+
+router.post('/favourite/:id/remove', movieController.removeFavourite);
+
 // A simple test route
 router.get('/test-mongo', async (req, res) => {
     try {

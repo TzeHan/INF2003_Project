@@ -3,12 +3,28 @@
 <main>
     <div id="container">
         <img src="/images/<%= movie.img%>" alt="movie poster" id="banner">
+
         <div id="description">
             <div id="section1">
                 <div></div>
                 <h1>Movie Description</h1>
-                <img src="/images/heart.png" alt="heart" id="icon">
+
+                <% if (isFavourite) { %>
+                    <form action="/favourite/<%= movie.product_id %>/remove" method="POST">
+                        <button type="submit">
+                            <img src="/images/heart.png" alt="Remove from favourites" id="icon">
+                        </button>
+                    </form>
+                <% } else { %>
+                    <form action="/favourite/<%= movie.product_id %>" method="POST">
+                        <button type="submit">
+                            <img src="/images/heart.png" alt="Add to favourites" id="icon">
+                        </button>
+                    </form>
+                <% } %>
+
             </div>
+
             <div id="section2">
                 <div id="left">
                     <div class="details">
@@ -17,6 +33,7 @@
                         </h2>
                         <p><%=movie.title%></p>
                     </div>
+
                     <div class="details">
                         <h2>
                             Genre
@@ -25,6 +42,7 @@
                             testing
                         </p>
                     </div>
+
                     <div class="details">
                         <h2>
                             Release Date
@@ -33,6 +51,7 @@
                             <%=new Date(movie.date).toLocaleDateString('en-GB')%>
                         </p>
                     </div>
+
                     <div class="details">
                         <h2>
                             Duration
@@ -42,9 +61,11 @@
                         </p>
                     </div>
                 </div>
+
                 <div id="line">
 
                 </div>
+
                 <div id="right">
                     <div class="details">
                         <h2>
@@ -54,6 +75,7 @@
                             <%=movie.language_id%>
                         </p>
                     </div>
+
                     <div class="details">
                         <h2>
                             Synopsis
@@ -66,14 +88,10 @@
             </div>
         </div>
     </div>
-<button onclick="window.location.href='/purchaseTix/<%= movie.product_id %>'">Buy Tickets</button>
+
+    <button onclick="window.location.href='/purchaseTix/<%= movie.product_id %>'">Buy Tickets</button>
         Buy Tickets
     </button>
 </main>
-
-
-
-
-
 
 <%- include('partials/footer') %>
