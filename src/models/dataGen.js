@@ -113,7 +113,7 @@ const generateData = async () => {
 
     // 🚨 FIXED seat INSERT (matches your new initDb)
     await pool.query(`
-        INSERT INTO seat (row, col_num, seat_type_id)
+        INSERT INTO seat (\`row\`, col_num, seat_type_id)
         VALUES 
         ('A', 1, 1), ('A', 2, 1), ('A', 3, 1), ('A', 4, 1), ('A', 5, 1), ('A', 6, 1), ('A', 7, 1), ('A', 8, 1), ('A', 9, 1), ('A', 10, 1),
         ('B', 1, 1), ('B', 2, 1), ('B', 3, 1), ('B', 4, 1), ('B', 5, 1), ('B', 6, 1), ('B', 7, 1), ('B', 8, 1), ('B', 9, 1), ('B', 10, 1),

@@ -125,7 +125,7 @@ const createTables = async () => {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS seat (
       seat_id INT AUTO_INCREMENT PRIMARY KEY,
-      row VARCHAR(1) NOT NULL,
+      \`row\` VARCHAR(1) NOT NULL,
       col_num INT NOT NULL,
       seat_type_id INT NOT NULL,
       FOREIGN KEY (seat_type_id) REFERENCES seat_type(seat_type_id)

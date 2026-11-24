@@ -10,7 +10,7 @@ exports.createSeatType = async (seatType) => {
 
 exports.createSeat = async (seat) => {
     const [result] = await pool.query(
-        'INSERT INTO seat (row, col_num, seat_type_id) VALUES (?, ?, ?)',
+        'INSERT INTO seat (`row`, col_num, seat_type_id) VALUES (?, ?, ?)',
         [seat.row, seat.col_num, seat.seat_type_id]
     );
     return result;
@@ -45,7 +45,7 @@ exports.findByMovie = async (movie) => {
 
 exports.updateSeat = async (seat) => {
     const [result] = await pool.query(
-        'UPDATE seat SET row = ?, col_num = ?, seat_type_id = ? WHERE seat_id = ?',
+        'UPDATE seat SET `row` = ?, col_num = ?, seat_type_id = ? WHERE seat_id = ?',
         [seat.row, seat.col_num, seat.seat_type_id, seat.seatId]
     );
     return result;
