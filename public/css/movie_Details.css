@@ -46,6 +46,26 @@ main{
     align-self: flex-end;
 }
 
+/* heart button*/
+#section1 #favForm{
+    width: 5vw;
+}
+
+#section1 #favBtn{
+    border: none;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}
+
+#section1 #favBtn:hover #icon{
+    transform: scale(1.1);
+}
+
+/* make the black outline heart red when the movie is a favourite */
+#section1 #icon.pressFavourite{
+    filter: invert(20%) sepia(100%) saturate(10000%);
+}
 #section1 div{
     width: 5vw;
 }

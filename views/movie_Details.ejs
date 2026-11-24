@@ -7,7 +7,17 @@
             <div id="section1">
                 <div></div>
                 <h1>Movie Description</h1>
-                <img src="/images/heart.png" alt="heart" id="icon">
+
+                <form method="POST" id="favForm"
+                      action="/favourites/<%= isFavourite ? 'remove' : 'add' %>/<%= movie.product_id %>">
+                    <input type="hidden" name="redirect" value="details">
+                    <button type="submit" id="favBtn"
+                            title="<%= isFavourite ? 'Remove from favourites' : 'Add to favourites' %>">
+                        <img src="/images/heart.png" alt="heart" id="icon"
+                             class="<%= isFavourite ? 'pressFavourite' : '' %>">
+                    </button>
+                </form>
+                
             </div>
             <div id="section2">
                 <div id="left">
