@@ -32,7 +32,8 @@
 
                 <a href="/">Movies</a>
                 <a href="/food/1">Food</a>
-                <a href="">Watch History</a>
+                <a href="/watchhistory">Watch History</a>
+                <a href="/foodhistory">Food History</a>
                 <% if (user && user.type_id == 2) { %>
                  <a href="/admin/movie/add">Add Movies</a>
                  <a href="/admin/food/add">Add Food</a>
@@ -42,7 +43,7 @@
 
         <div id="nav2">
             <nav>
-                <a href="">
+                <a href="/favourites">
                     <img src="/images/heart.svg" alt="favourites">
                 </a>
                 <a href="/cart">
