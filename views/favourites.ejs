@@ -1,0 +1,32 @@
+<%- include('partials/header', {title: 'Favourites', pageStylesheet: '/css/favourites.css'}) %>
+
+<main>
+    <div id="moviesection">
+        <h1>My Favourites</h1>
+
+        <% if (movies.length === 0) { %>
+            <p class="empty">
+                You have no favourite movies yet.
+                Tap the heart on the movie description to add it here.
+            </p>
+            <a href="/" class="browse">Browse Movies</a>
+        <% } else { %>
+            <div id="movieblocks">
+                <% movies.forEach(element => { %>
+                    <div class="card">
+                        <a href="/movieDetails/<%= element.product_id %>">
+                            <img src="/images/<%= element.img %>" alt="<%= element.title %>">
+                            <p class="title"><%= element.title %></p>
+                            <p class="duration"><%= element.duration %></p>
+                        </a>
+                        <form method="POST" action="/favourites/remove/<%= element.product_id %>">
+                            <button type="submit" class="removeBtn">Remove</button>
+                        </form>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+</main>
+
+<%- include('partials/footer') %>
