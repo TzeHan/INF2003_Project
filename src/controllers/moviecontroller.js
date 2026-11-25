@@ -56,6 +56,9 @@ exports.getMoviebyid = (viewName) =>
 
 exports.addFavourite = async(req,res)=>{
     try{
+         if (!req.session.user) {
+                    return res.redirect('/login'); 
+                }
         const userId = req.session.user.user_id;
         const productId = parseInt(req.params.id);
 

@@ -12,7 +12,7 @@
                 <% if (isFavourite) { %>
                     <form action="/favourite/<%= movie.product_id %>/remove" method="POST">
                         <button type="submit">
-                            <img src="/images/heart.png" alt="Remove from favourites" id="icon">
+                            <img src="/images/logo.png" alt="Remove from favourites" id="icon">
                         </button>
                     </form>
                 <% } else { %>
@@ -90,7 +90,6 @@
     </div>
 
     <button onclick="window.location.href='/purchaseTix/<%= movie.product_id %>'">Buy Tickets</button>
-        Buy Tickets
     </button>
 </main>
 
