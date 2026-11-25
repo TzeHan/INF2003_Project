@@ -13,6 +13,8 @@ const reviewModel = require('../models/reviewModel');
 
 router.get('/purchaseTix/:id',movieController.retrieveBookingDetails)
 
+router.get('/favourite', movieController.retrieveFavs);
+
 router.post('/favourite/:id', movieController.addFavourite);
 
 router.post('/favourite/:id/remove', movieController.removeFavourite);

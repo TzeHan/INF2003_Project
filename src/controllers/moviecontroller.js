@@ -93,3 +93,24 @@ exports.removeFavourite = async(req,res)=>{
         res.status(500).render('error',{error:'Error'})
     }
 };
+
+exports.retrieveFavs = async(req,res) =>{
+            try{
+                if (!req.session.user) {
+                    return res.redirect('/login'); 
+                }
+                let movies = [];
+                const fav = await favouriteQuery.findMoviesByUserId(req.session.user.user_id);
+                for (const movieId of fav) {
+                    const movieDetail = await movieQuery.findById(movieId);
+                    if (movieDetail) {
+                        movies.push(movieDetail);
+                    }
+                };
+                res.render("favourites",{movies:movies})
+            }
+            catch(err){
+                console.error(err);
+                res.status(500).render('error',{error:'Error'})
+            }
+        };

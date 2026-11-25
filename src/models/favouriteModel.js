@@ -19,6 +19,14 @@ exports.findByUserId = async (userId) => {
     return favourites;
 };
 
+exports.findMoviesByUserId = async (userId) => {
+    const db = await connectToMongo();
+    const movieIds = await db.collection('favourites')
+        .distinct('product_id', { user_id: userId });
+    
+    return movieIds;
+};
+
 exports.findByUserAndMovie = async (userId, productId) => {
     const db = await connectToMongo();
     return await db.collection('favourites').findOne({
