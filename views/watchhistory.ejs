@@ -17,12 +17,20 @@
                 </thead>
 
                 <tbody>
+                    <% if (history.length === 0) { %>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td colspan="4" style="text-align: center;">No watch history found.</td>
                         </tr>
+                    <% } else { %>
+                        <% history.forEach(item => { %>
+                            <tr>
+                                <td><%= new Date(item.booking_date).toLocaleDateString('en-GB') %></td>
+                                <td><%= item.title %></td>
+                                <td><%= item.quantity %></td>
+                                <td>$<%= item.price %></td>
+                            </tr>
+                        <% }) %>
+                    <% } %>
                 </tbody>
 
             </table>

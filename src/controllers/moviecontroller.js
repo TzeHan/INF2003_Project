@@ -94,6 +94,22 @@ exports.removeFavourite = async(req,res)=>{
     }
 };
 
+
+exports.removeFavourites = async(req,res)=>{
+    try{
+        const userId = req.session.user.user_id;
+        const productId = parseInt(req.params.id);
+
+        await favouriteQuery.remove(userId, productId);
+
+        res.redirect('/favourite');
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).render('error',{error:'Error'})
+    }
+};
+
 exports.retrieveFavs = async(req,res) =>{
             try{
                 if (!req.session.user) {
@@ -114,3 +130,51 @@ exports.retrieveFavs = async(req,res) =>{
                 res.status(500).render('error',{error:'Error'})
             }
         };
+
+
+exports.getWatchHistory = async(req, res) => {
+    try {
+        if (!req.session.user) {
+            return res.redirect('/login');
+        }
+        
+        const history = await movieQuery.getWatchHistory(req.session.user.user_id);
+        
+        res.render('watchhistory', { history: history });
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).render('error', {error: 'Error'});
+    }
+};
+
+
+exports.purchaseTix = async(req, res) => {
+    try {
+        if (!req.session.user) {
+            return res.redirect('/login');
+        }
+
+        const { product_id, selectedSeats } = req.body;
+
+        if (!selectedSeats) {
+            return res.status(400).send("Please select at least one seat.");
+        }
+
+        const seatsArray = Array.isArray(selectedSeats) ? selectedSeats : [selectedSeats];
+
+        const tixDetails = {
+            user_id: req.session.user.user_id,
+            product_id: Number(product_id),
+            qty: seatsArray.length,
+            selectedSeats: seatsArray
+        };
+
+        await movieQuery.purchaseTix(tixDetails);
+        res.redirect('/');
+
+    } catch(err) {
+        console.error(err);
+        res.status(500).render('error', {error: 'Error processing ticket'});
+    }
+};

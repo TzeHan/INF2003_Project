@@ -6,7 +6,8 @@
             <h1>Buy Tickets</h1>
         </div>
         
-        <form id="moviesection">
+        <form id="moviesection" action="/buyTicket" method="POST">
+                <input type="hidden" name="product_id" id="id" value="<%=movie.product_id%>">
                 <div class="formItems">
                     <label for="name">Movie:</label>
                     <input type="text" name="name" id="name" value="<%=movie.title%>" disabled>
@@ -30,23 +31,21 @@
                     <label for="tixType">Type:</label>
                     <input type="text" name="tixType" id="tixType" value="<%=movie.tier_name%>">
                 </div>
-                <div id="seatingMap">
-                    <h1 id="screen">Screen</h1>
-                    <% rows.forEach(row => { %>
-                        <div class="seat-row">
-                            <% seats.forEach(seat => { %>
-                                <% if (seat.row == row.row) { %>
-                                    <div class="individualSeat">
-                                        <label for="<%=seat.seat_id%>"><%=seat.row + seat.col_num%></label>
-                                        <input<% if (seat.status_name != "Available") { %>
-                                            class = "unavailable" disabled
-                                        <% } %> type="checkbox" name="<%=seat.seat_id%>" id="<%=seat.seat_id%>">
-                                    </div>
-                                <% } %>
-                            <% }) %>
-                        </div>
-                    <% }) %>
-                </div>
+            <div id="seatingMap">
+                <h1 id="screen">Screen</h1>
+                <% rows.forEach(row => { %>
+                    <div class="seat-row">
+                        <% seats.forEach(seat => { %>
+                            <% if (seat.row == row.row) { %>
+                                <div class="individualSeat">
+                                    <label for="<%=seat.seat_id%>"><%=seat.row + seat.col_num%></label>
+                                    <input <% if (seat.status_name != "Available") { %> class="unavailable" disabled <% } %> type="checkbox" name="selectedSeats" id="<%=seat.seat_id%>" value="<%=seat.screening_id%>">
+                                </div>
+                            <% } %>
+                        <% }) %>
+                    </div>
+                <% }) %>
+            </div>
             <button class="buyBtn">Submit</button>
         </form>
     </div>

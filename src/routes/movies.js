@@ -19,6 +19,11 @@ router.post('/favourite/:id', movieController.addFavourite);
 
 router.post('/favourite/:id/remove', movieController.removeFavourite);
 
+router.post('/favourites/remove/:id',movieController.removeFavourites)
+
+router.get('/watchHistory',movieController.getWatchHistory)
+
+router.post('/buyTicket',movieController.purchaseTix)
 
 
 module.exports = router;

@@ -7,7 +7,7 @@ exports.findAll = async() => {
 
 exports.findSeats = async(id) => {
     const[rows] = await pool.query(`SELECT 
-    s.*, sc.status_id, 
+    s.*, sc.status_id, sc.screening_id,
     st.name AS status_name,
     seat_t.name AS seat_type_name,
     seat_t.price AS seat_price
@@ -63,6 +63,25 @@ exports.findById = async(id) => {
         [id]
     );
     return rows[0];
+};
+
+exports.getWatchHistory = async (userId) => {
+        const [history] = await pool.query(
+            `SELECT 
+                b.booking_date, 
+                m.title, 
+                COUNT(t.ticket_id) AS quantity, 
+                b.price
+            FROM booking b
+            JOIN ticket t ON b.booking_id = t.booking_id
+            JOIN screening s ON t.screening_id = s.screening_id
+            JOIN movie m ON s.product_id = m.product_id
+            WHERE b.user_id = ?
+            GROUP BY b.booking_id, b.booking_date, m.title, b.price
+            ORDER BY b.booking_date DESC, b.booking_time DESC`,
+            [userId]
+        );
+        return history;
 };
 
 exports.create = async(movie) => {
@@ -142,4 +161,63 @@ exports.remove = async(movie) => {
     );
 
     return result;
+};
+
+
+exports.purchaseTix = async(tix) => {
+    const connection = await pool.getConnection();
+    const now = new Date();
+
+    try {
+        await connection.beginTransaction();
+        const bookingDate = now.toISOString().split('T')[0]; 
+        const bookingTime = now.toTimeString().split(' ')[0]; 
+
+        await connection.query(
+            `INSERT INTO booking(booking_date, status_id, booking_time, user_id, price) 
+            VALUES (?, (SELECT status_id FROM status WHERE name = ?), ?, ?, (SELECT price FROM movie WHERE product_id = ?) * ?)`,
+            [
+                bookingDate, 
+                'Booked',
+                bookingTime,
+                tix.user_id,
+                tix.product_id,
+                tix.qty
+            ]
+        );
+
+        const [bookingRows] = await connection.query(
+            'SELECT booking_id FROM booking WHERE user_id = ? ORDER BY booking_id DESC LIMIT 1',
+            [tix.user_id]
+        );
+        const bookingId = bookingRows[0].booking_id;
+
+        for (const screeningId of tix.selectedSeats) {
+            await connection.query(
+                `INSERT INTO ticket (booking_id, screening_id, price) 
+                VALUES (?, ?, (SELECT price FROM movie WHERE product_id = ?))`,
+                [
+                    bookingId, 
+                    Number(screeningId),
+                    tix.product_id
+                ]
+            );
+
+            await connection.query(
+                `UPDATE Screening 
+                 SET status_id = (SELECT status_id FROM status WHERE name = 'Booked') 
+                 WHERE screening_id = ?`,
+                [Number(screeningId)]
+            );
+        }
+
+        await connection.commit();
+        return { success: true };
+
+    } catch (error) {
+        await connection.rollback();
+        throw error;
+    } finally {
+        connection.release();
+    }
 };

@@ -12,13 +12,13 @@
                 <% if (isFavourite) { %>
                     <form action="/favourite/<%= movie.product_id %>/remove" method="POST">
                         <button type="submit">
-                            <img src="/images/logo.png" alt="Remove from favourites" id="icon">
+                            <img src="/images/red_heart.jpeg" alt="Remove from favourites" id="icon">
                         </button>
                     </form>
                 <% } else { %>
                     <form action="/favourite/<%= movie.product_id %>" method="POST">
                         <button type="submit">
-                            <img src="/images/heart.png" alt="Add to favourites" id="icon">
+                            <img src="/images/heart.svg" alt="Add to favourites" id="icon">
                         </button>
                     </form>
                 <% } %>
