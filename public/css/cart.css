@@ -62,10 +62,14 @@ main{
     background-color: #fff;
 }
 
-#btn-remove{
+#btn-remove, #btn-Pay{
     background-color: #fff;
     border: 1px solid #000;
     border-radius: 2vh;
     padding: 1vh;
     margin: 0 1vh 1vh 0;
+}
+
+#btn-Pay{
+    width: 100%;
 }

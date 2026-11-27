@@ -108,3 +108,78 @@ exports.updateFood = async (food) => {
         connection.release();
     }
 };
+
+exports.getFoodHistory = async (userId) => {
+    const [history] = await pool.query(
+        `SELECT 
+            fo.order_date, 
+            f.name, 
+            SUM(foi.qty) AS quantity, 
+            fo.total_cost AS price
+        FROM food_order fo
+        JOIN food_order_item foi ON fo.food_order_id = foi.food_order_id
+        JOIN Food f ON foi.product_id = f.product_id
+        WHERE fo.user_id = ?
+        GROUP BY fo.food_order_id, fo.order_date, fo.order_time, f.name, fo.total_cost
+        ORDER BY fo.order_date DESC, fo.order_time DESC`,
+        [userId]
+    );
+    return history;
+};
+
+exports.checkoutCart = async (userId) => {
+    const connection = await pool.getConnection();
+    const now = new Date();
+    const orderDate = now.toISOString().split('T')[0]; 
+    const orderTime = now.toTimeString().split(' ')[0]; 
+
+    try {
+        await connection.beginTransaction();
+
+        const [cartItems] = await connection.query(
+            `SELECT c.product_id, c.qty, f.price 
+             FROM Cart c 
+             JOIN Food f ON c.product_id = f.product_id 
+             WHERE c.user_id = ?`,
+            [userId]
+        );
+
+        if (cartItems.length === 0) {
+            throw new Error("Cart is empty");
+        }
+
+        let totalCost = 0;
+        for (const item of cartItems) {
+            totalCost += (item.price * item.qty);
+        }
+
+        const [orderResult] = await connection.query(
+            `INSERT INTO food_order (user_id, order_date, order_time, total_cost) 
+             VALUES (?, ?, ?, ?)`,
+            [userId, orderDate, orderTime, totalCost]
+        );
+        const orderId = orderResult.insertId;
+
+        for (const item of cartItems) {
+            await connection.query(
+                `INSERT INTO food_order_item (product_id, food_order_id, qty, price) 
+                 VALUES (?, ?, ?, ?)`,
+                [item.product_id, orderId, item.qty, item.price]
+            );
+        }
+
+        await connection.query(
+            `DELETE FROM Cart WHERE user_id = ?`,
+            [userId]
+        );
+
+        await connection.commit();
+        return { success: true, orderId: orderId };
+
+    } catch (error) {
+        await connection.rollback();
+        throw error;
+    } finally {
+        connection.release();
+    }
+};

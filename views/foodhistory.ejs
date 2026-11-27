@@ -14,14 +14,20 @@
                 </tr>
             </thead>
             <tbody>
-               
+                <% if (history.length === 0) { %>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                   </tr>
-            
+                        <td colspan="4" style="text-align: center;">No food history found.</td>
+                    </tr>
+                <% } else { %>
+                    <% history.forEach(item => { %>
+                        <tr>
+                            <td><%= new Date(item.order_date).toLocaleDateString('en-GB') %></td>
+                            <td><%= item.name %></td>
+                            <td><%= item.quantity %></td>
+                            <td>$<%= item.price %></td>
+                        </tr>
+                    <% }) %>
+                <% } %>
             </tbody>
         </table>
     </div>

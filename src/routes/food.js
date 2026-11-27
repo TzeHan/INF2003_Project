@@ -14,5 +14,9 @@ router.post('/cart/update',foodController.updateQty);
 
 router.post('/cart/delete',foodController.deleteFood);
 
+router.get('/foodHistory',foodController.getFoodHistory)
+
+router.post('/cart/checkout', foodController.checkoutCart);
+
 
 module.exports = router;

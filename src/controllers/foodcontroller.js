@@ -1,5 +1,6 @@
 const foodQuery = require('../models/foodModel');
 const cartQuery = require('../models/cartModel');
+const { render } = require('ejs');
 
 exports.getAllfood = (viewName)=>
         async(req,res)=>{
@@ -96,4 +97,38 @@ exports.deleteFood = async(req,res)=>{
                 console.error(err);
                 res.status(500).render('error',{error:'Error'})
             }
+};
+
+exports.getFoodHistory = async(req, res) => {
+    try {
+        if (!req.session.user) {
+            return res.redirect('/login');
+        }
+        
+        const history = await foodQuery.getFoodHistory(req.session.user.user_id);
+        
+        res.render('foodhistory', { history: history });
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).render('error', {error: 'Error'});
+    }
+};
+
+exports.checkoutCart = async (req, res) => {
+    try {
+        if (!req.session.user) {
+            return res.redirect('/login');
+        }
+
+        const userId = req.session.user.user_id;
+        
+        await foodQuery.checkoutCart(userId);
+        
+        res.redirect('/foodhistory'); 
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).render('error', { error: 'Error processing checkout' });
+    }
 };
