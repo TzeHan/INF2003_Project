@@ -55,11 +55,20 @@ exports.findAllTier = async() => {
 
 exports.findById = async(id) => {
     const [rows] = await pool.query(
-        `SELECT m.*, h.hall_num, t.name AS tier_name
-         FROM movie m
-         JOIN hall h ON m.hall_id = h.hall_id
-         JOIN tier t ON m.tier_id = t.tier_id
-         WHERE m.product_id = ?`,
+        `SELECT 
+        m.*, 
+        h.hall_num, 
+        t.name AS tier_name, 
+        l.name AS language_name,
+        GROUP_CONCAT(g.name SEPARATOR ', ') AS genres
+        FROM movie m
+        JOIN hall h ON m.hall_id = h.hall_id
+        JOIN tier t ON m.tier_id = t.tier_id
+        JOIN Language l ON m.language_id = l.Language_id
+        LEFT JOIN movie_genre mg ON m.product_id = mg.product_id
+        LEFT JOIN Genre g ON mg.genre_id = g.genre_id
+        WHERE m.product_id = ?
+        GROUP BY m.product_id`,
         [id]
     );
     return rows[0];
