@@ -1,8 +1,9 @@
+
 <%- include('partials/header', {title: 'Home', pageStylesheet: '/css/movie_Details.css'}) %>
 
 <main>
     <div id="container">
-        <img src="/images/<%= movie.img%>" alt="movie poster" id="banner">
+        <img src="/images/<%= movie.img %>" alt="movie poster" id="banner">
 
         <div id="description">
             <div id="section1">
@@ -22,75 +23,110 @@
                         </button>
                     </form>
                 <% } %>
-
             </div>
 
             <div id="section2">
                 <div id="left">
                     <div class="details">
-                        <h2>
-                            Title
-                        </h2>
-                        <p><%=movie.title%></p>
+                        <h2>Title</h2>
+                        <p><%= movie.title %></p>
                     </div>
 
                     <div class="details">
-                        <h2>
-                            Genre
-                        </h2>
-                        <p>
-                            testing
-                        </p>
+                        <h2>Genre</h2>
+                        <p>testing</p>
                     </div>
 
                     <div class="details">
-                        <h2>
-                            Release Date
-                        </h2>
-                        <p>
-                            <%=new Date(movie.date).toLocaleDateString('en-GB')%>
-                        </p>
+                        <h2>Release Date</h2>
+                        <p><%= new Date(movie.date).toLocaleDateString('en-GB') %></p>
                     </div>
 
                     <div class="details">
-                        <h2>
-                            Duration
-                        </h2>
-                        <p>
-                            <%=movie.duration%>
-                        </p>
+                        <h2>Duration</h2>
+                        <p><%= movie.duration %></p>
                     </div>
                 </div>
 
-                <div id="line">
-
-                </div>
+                <div id="line"></div>
 
                 <div id="right">
                     <div class="details">
-                        <h2>
-                            Language
-                        </h2>
-                        <p>
-                            <%=movie.language_id%>
-                        </p>
+                        <h2>Language</h2>
+                        <p><%= movie.language_id %></p>
                     </div>
 
                     <div class="details">
-                        <h2>
-                            Synopsis
-                        </h2>
-                        <p>
-                            <%=movie.description%>
-                        </p>
+                        <h2>Synopsis</h2>
+                        <p><%= movie.description %></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <button onclick="window.location.href='/purchaseTix/<%= movie.product_id %>'">Buy Tickets</button>
+    <button onclick="window.location.href='/purchaseTix/<%= movie.product_id %>'">
+        Buy Tickets
     </button>
+
+    <!-- Movie Reviews -->
+    <section id="movie-reviews" style="max-width: 850px; margin: 40px auto; padding: 20px;">
+        <h2>Movie Reviews</h2>
+
+        <% if (currentUser) { %>
+            <h3>Write a Review</h3>
+
+            <form action="/movieDetails/<%= movie.product_id %>/review" method="POST">
+                <div style="margin-bottom: 15px;">
+                    <label for="rating">Rating</label>
+                    <select id="rating" name="rating" required>
+                        <option value="">Select a rating</option>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Good</option>
+                        <option value="3">3 - Average</option>
+                        <option value="2">2 - Poor</option>
+                        <option value="1">1 - Very Poor</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="comment">Your Review</label>
+                    <textarea
+                        id="comment"
+                        name="comment"
+                        rows="4"
+                        maxlength="1000"
+                        required
+                        style="display: block; width: 100%;"
+                    ></textarea>
+                </div>
+
+                <button type="submit">Submit Review</button>
+            </form>
+        <% } else { %>
+            <p>Please <a href="/login">log in</a> to write a review.</p>
+        <% } %>
+
+        <hr>
+
+        <h3>Customer Reviews</h3>
+
+        <% if (reviews.length === 0) { %>
+            <p>No reviews yet. Be the first to review this movie!</p>
+        <% } else { %>
+            <% reviews.forEach(review => { %>
+                <div style="padding: 15px 0; border-bottom: 1px solid #ccc;">
+                    <p>
+                        <strong>Rating: <%= review.rating %>/5</strong>
+                    </p>
+                    <p><%= review.comment %></p>
+                    <small>
+                        <%= new Date(review.date).toLocaleDateString('en-GB') %>
+                    </small>
+                </div>
+            <% }) %>
+        <% } %>
+    </section>
 </main>
 
 <%- include('partials/footer') %>
